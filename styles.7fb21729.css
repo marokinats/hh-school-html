@@ -1,0 +1,45 @@
+.grid {
+  background-image: linear-gradient(to right, transparent 10px, rgba(255, 0, 0, 0.1) 1px);
+  background-size: calc(50% + 5px);
+  background-position: -10px 0;
+  position: fixed;
+  z-index: 9999;
+  top: 0;
+  bottom: 0;
+  left: 15px;
+  right: 15px;
+  display: none;
+  pointer-events: none;
+}
+@media (max-width: 767px) {
+  .grid {
+    max-width: 590px;
+    margin: 0 auto;
+  }
+}
+@media (min-width: 768px) {
+  .grid {
+    background-image: linear-gradient(to right, transparent 30px, rgba(255, 0, 0, 0.1) 1px);
+    background-size: 120px auto;
+    background-position: -15px 0;
+    width: 720px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%);
+  }
+}
+@media (min-width: 1000px) {
+  .grid {
+    background-size: 80px auto;
+    width: 960px;
+  }
+}
+.grid_visible {
+  display: block;
+}
+body {
+  background-color: green;
+}
+
+
+/*# sourceMappingURL=/styles.7fb21729.css.map */
