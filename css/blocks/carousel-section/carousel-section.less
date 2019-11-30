@@ -1,0 +1,94 @@
+.carousel-section {
+	background-color: #f9f9f9;
+	padding: 30px 0;
+	position: relative;
+
+	@media @screen-gt-s {
+		padding: 57px 0;
+	}
+
+	@media @screen-gt-m {
+		padding: 60px 0;
+	}
+}
+
+.carousel-card {
+	display: flex;
+	align-items: center;
+	flex-wrap: wrap;
+	text-align: center;
+
+	&[data-card="2"] {
+		display: none;
+	}
+
+	@media @screen-gt-s {
+		flex-wrap: nowrap;
+		text-align: left;
+	}
+
+	&__descr {
+		width: 100%;
+		order: 2;
+
+		@media @screen-gt-s {
+			width: 50%;
+			order: 1;
+		}
+
+		&-title {
+			margin-bottom: 10px;
+
+			@media @screen-gt-s {
+				margin-bottom: 20px;
+			}
+		}
+	}
+	&__image {
+		display: block;
+		&-container {
+			width: 100%;
+			order: 1;
+			margin-bottom: 40px;
+
+			@media @screen-gt-s {
+				width: 50%;
+				order: 2;
+				margin-bottom: 0;
+			}
+		}
+	}
+}
+
+.carousel-dots {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 160px;
+	cursor: pointer;
+
+	@media @screen-gt-s {
+		bottom: 20px;
+	}
+
+	&__list {
+		display: flex;
+	}
+
+	&__item {
+		width: 8px;
+		height: 8px;
+		background: #dfdedd;
+		border-radius: 50%;
+		margin-right: 5px;
+		&:last-child {
+			margin-right: 0;
+		}
+		&_active {
+			background: #212122;
+			transition-duration: 0.2s;
+			transition-timing-function: ease;
+			transition-property: background-color;
+		}
+	}
+}
