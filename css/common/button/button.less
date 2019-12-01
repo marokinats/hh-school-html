@@ -30,7 +30,25 @@
 	&:active {
 		box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
 	}
+
+	&_selection {
+		background-color: #fff;
+		border-color: #dfdedd;
+		color: @color-hell;
+
+		&:hover,
+		&:focus,
+		&:active {
+			background-color: #fff;
+			box-shadow: none;
+		}
+		&.selected {
+			background-color: #eeeeee;
+			color: @color-text;
+		}
+	}
 }
+
 .default-button-link() {
 	box-sizing: border-box;
 	display: inline-block;

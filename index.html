@@ -214,7 +214,7 @@
 						</div>
 						<div class="column column_l-4 d-none d-block_m">
 							<div class="footer__logo">
-									<a href="#" class="logo-link"><img class="logo logo_footer" src="css/blocks/logo/logo-grey.svg" alt="hh.ru"/></a>
+								<a href="#" class="logo-link"><img class="logo logo_footer" src="css/blocks/logo/logo-grey.svg" alt="hh.ru"/></a>
 							</div>
 						</div>
 					</div>
@@ -229,6 +229,103 @@
 				</div>
 			</div>
 		</footer>
+
+		<div class="popup-order" id="popup-order">
+			<div class="columns-wrapper">
+				<div class="columns-row">
+					<div class="column column_s-2 column_m-3 column_l-7">
+						<form action="#" class="form form-order">
+							<div class="form__items">
+								<h1 class="heading form__title">Оформление заказа</h1>
+								<div class="form__block form__block_contacts">
+									<h3 class="heading heading_level-3 form__block-title">Контактное лицо</h3>
+									<div class="form__item form__item_text">
+										<input type="text" class="form__input" placeholder="ФИО" required />
+									</div>
+									<div class="form__item form__item_text">
+										<input type="text" class="form__input" placeholder="Электронная почта" required />
+									</div>
+									<div class="form__item form__item_text">
+										<input type="text" class="form__input form__input_phone-pre" placeholder="+7" required />
+										<input type="text" class="form__input form__input_phone-code" placeholder="Код" required />
+										<input type="text" class="form__input form__input_phone-number" placeholder="Номер" required />
+									</div>
+								</div>
+								<div class="form__block form__block_delivery">
+									<h3 class="heading heading_level-3 form__block-title">Способ получения заказа</h3>
+									<div class="form__item form__item_button">
+										<button type="button" class="button button_selection form__button">Самовывоз</button>
+										<button type="button" class="button button_selection form__button selected">Доставка</button>
+									</div>
+								</div>
+								<div class="form__block form__block_address">
+									<h3 class="heading heading_level-3 form__block-title">Адрес</h3>
+									<div class="form__item form__item_select">
+										<select name="city" id="select-city" class="form__select">
+											<option value="0" class="form__option">Москва</option>
+											<option value="1" class="form__option">Химки</option>
+											<option value="2" class="form__option">Санкт-Петербург</option>
+										</select>
+									</div>
+									<div class="form__item form__item_textarea">
+										<textarea name="address" id="address" cols="30" rows="4" class="form__textarea" placeholder="Адрес"></textarea>
+									</div>
+								</div>
+								<div class="form__block form__block_payment-type">
+									<h3 class="heading heading_level-3 form__block-title">Оплата</h3>
+									<div class="form__item form__item_radio">
+										<label for="online-pay" class="form__label form__label_radio">
+											<input type="radio" name="online-pay" id="online-pay" class="form__radio" />
+											<span class="form__radio-box"></span>
+											<span class="form__radio-text">Online-оплата</span>
+										</label>
+									</div>
+									<div class="form__item form__item_radio">
+										<label for="cash-pay" class="form__label form__label_radio">
+											<input type="radio" name="cash-pay" id="cash-pay" class="form__radio" />
+											<span class="form__radio-box"></span>
+											<span class="form__radio-text">Наличными</span>
+										</label>
+									</div>
+									<div class="form__item form__item_radio">
+										<label for="card-pay" class="form__label form__label_radio">
+											<input type="radio" name="card-pay" id="card-pay" class="form__radio" />
+											<span class="form__radio-box"></span>
+											<span class="form__radio-text">Картой при получении</span>
+										</label>
+									</div>
+								</div>
+								<div class="form__block form__block_payment-type">
+									<h3 class="heading heading_level-3 form__block-title">Уведомления</h3>
+									<div class="form__item form__item_checkbox">
+										<label for="sms" class="form__label form__label_checkbox">
+											<input type="checkbox" name="sms" id="sms" class="form__checkbox" />
+											<span class="form__checkbox-box"></span>
+											<span class="form__checkbox-text">Хочу получать SMS уведомления</span>
+										</label>
+									</div>
+								</div>
+								<div class="form__item form__item_button">
+									<button type="submit" class="button form__button form__button_submit">Оформить заказ</button>
+								</div>
+							</div>
+						</form>
+					</div>
+					<div class="column column_l-1 d-none d-block_m"></div>
+					<div class="column column_m-3 column_l-4 d-none d-block_s">
+						<div class="product-card">
+							<div class="product-card__image-container">
+								<img class="product-card__image" src="images/product-1.jpg" alt="Зонт" />
+							</div>
+							<div class="product-card__name">Зонт</div>
+							<div class="product-card__price">
+								1&nbsp;990 ₽
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 
 		<script src="js/index.js"></script>
 	</body>
