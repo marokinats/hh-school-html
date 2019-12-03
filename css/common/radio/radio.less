@@ -1,0 +1,22 @@
+.radio {
+	display: none;
+	&-box {
+		width: 16px;
+		height: 16px;
+		border: 1px solid #c5c9ca;
+		box-sizing: border-box;
+		border-radius: 50%;
+		background: #ffffff;
+		margin-right: 10px;
+		transition-duration: 0.2s;
+		transition-timing-function: ease;
+		transition-property: border, background-image, background-color;
+		-webkit-appearance: none;
+	}
+	&:checked + & {
+		&-box {
+			border: none;
+			background: url("radio.svg") no-repeat center center;
+		}
+	}
+}

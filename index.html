@@ -16,10 +16,10 @@
 			<div class="columns-wrapper">
 				<div class="top-section__content">
 					<div class="top-section__button">
-						<button class="button-link top-section-button top-section-button_city">Москва</button>
+						<button class="button-link">Москва</button>
 					</div>
 					<nav class="top-section__nav">
-						<ul class="nav top-section-nav">
+						<ul class="nav">
 							<li class="nav__item top-section-nav__item"><a href="#" class="nav__link top-section-nav__link">Шоурум</a></li>
 							<li class="nav__item top-section-nav__item"><a href="#" class="nav__link top-section-nav__link">Оплата</a></li>
 							<li class="nav__item top-section-nav__item"><a href="#" class="nav__link top-section-nav__link">Доставка</a></li>
@@ -63,18 +63,18 @@
 		<section class="carousel-section">
 			<div class="columns-wrapper">
 				<div class="carousel-card" data-card="1">
-					<div class="carousel-card__descr">
-						<h1 class="heading carousel-card__descr-title">Мужская и&nbsp;женская одежда с&nbsp;символикой HeadHunter</h1>
-						<button class="button carousel-card__descr-button">Перейти в&nbsp;каталог</button>
+					<div class="carousel-card__description">
+						<h1 class="heading carousel-card__description-title">Мужская и&nbsp;женская одежда с&nbsp;символикой HeadHunter</h1>
+						<button class="button carousel-card__description-button">Перейти в&nbsp;каталог</button>
 					</div>
 					<div class="carousel-card__image-container">
 						<img class="carousel-card__image" src="images/carousel-product-1.png" alt="Мужская и женская одежда" />
 					</div>
 				</div>
 				<div class="carousel-card" data-card="2">
-					<div class="carousel-card__descr">
-						<h1 class="heading carousel-card__descr-title">Офисные принадлежности с&nbsp;символикой HeadHunter</h1>
-						<button class="button carousel-card__descr-button">Перейти в&nbsp;каталог</button>
+					<div class="carousel-card__description">
+						<h1 class="heading carousel-card__description-title">Офисные принадлежности с&nbsp;символикой HeadHunter</h1>
+						<button class="button carousel-card__description-button">Перейти в&nbsp;каталог</button>
 					</div>
 					<div class="carousel-card__image-container">
 						<img class="carousel-card__image" src="images/carousel-product-2.png" alt="Мужская и женская одежда" />
@@ -173,25 +173,19 @@
 				<div class="columns-row">
 					<div class="column column_s-2 column_m-2 column_l-4">
 						<div class="triggers-item">
-							<div class="triggers-item__image">
-								<img src="css/blocks/triggers-section/icon-delivery.svg" alt="Доставка" class="logo logo_trigger" />
-							</div>
+							<div class="triggers-item__icon triggers-item__icon_delivery"></div>
 							<div class="triggers-item__text">Быстрая доставка по&nbsp;всей России</div>
 						</div>
 					</div>
 					<div class="column column_s-2 column_m-2 column_l-4">
 						<div class="triggers-item">
-							<div class="triggers-item__image">
-								<img src="css/blocks/triggers-section/icon-return.svg" alt="Возврат" class="logo logo_trigger" />
-							</div>
+							<div class="triggers-item__icon triggers-item__icon_return"></div>
 							<div class="triggers-item__text">100% гарантия возврата и&nbsp;подлинность товара</div>
 						</div>
 					</div>
 					<div class="column column_s-2 column_m-2 column_l-4">
 						<div class="triggers-item triggers-item_last">
-							<div class="triggers-item__image">
-								<img src="css/blocks/triggers-section/icon-support.svg" alt="Поддержка" class="logo logo_trigger" />
-							</div>
+							<div class="triggers-item__icon triggers-item__icon_support"></div>
 							<div class="triggers-item__text">Круглосуточная служба поддержки</div>
 						</div>
 					</div>
@@ -217,7 +211,7 @@
 								<a href="#" class="apps__link" target="_blank"><img src="css/blocks/apps/icon-googleplay.svg" alt="Google Play"/></a>
 							</div>
 						</div>
-						<div class="column column_l-4 d-none d-block_m">
+						<div class="column column_s-0 column_l-4">
 							<div class="footer__logo">
 								<a href="#" class="logo__link"><img class="logo logo_footer" src="css/blocks/logo/logo-grey.svg" alt="hh.ru"/></a>
 							</div>
@@ -239,94 +233,94 @@
 			<div class="columns-wrapper">
 				<div class="columns-row">
 					<div class="column column_s-2 column_m-3 column_l-7">
-						<div class="popup-order__form">
-							<form action="#" class="form form-order">
+						<div class="popup-order__form-container">
+							<form action="#" class="form popup-order__form">
 								<div class="form__items">
-									<div class="heading form__title">Оформление заказа</div>
+									<div class="heading popup-order__form-title">Оформление заказа</div>
 
-									<div class="form__block form__block_contacts">
-										<h3 class="heading heading_level-3 form__block-title">Контактное лицо</h3>
-										<div class="form__item form__item_text">
-											<input type="text" class="form__input" placeholder="ФИО" required />
+									<div class="form__block">
+										<h3 class="heading heading_level-3">Контактное лицо</h3>
+										<div class="form__item">
+											<input type="text" class="input" placeholder="ФИО" required />
 										</div>
-										<div class="form__item form__item_text">
-											<input type="text" class="form__input" placeholder="Электронная почта" required />
+										<div class="form__item">
+											<input type="text" class="input" placeholder="Электронная почта" required />
 										</div>
-										<div class="form__item form__item_text">
-											<input type="text" class="form__input form__input_phone-pre" placeholder="+7" required value="+7" />
-											<input type="text" class="form__input form__input_phone-code" placeholder="Код" required />
-											<input type="text" class="form__input form__input_phone-number" placeholder="Номер" required />
+										<div class="form__item">
+											<input type="text" class="input input_phone-pre" placeholder="+7" required value="+7" />
+											<input type="text" class="input input_phone-code" placeholder="Код" required />
+											<input type="text" class="input input_phone-number" placeholder="Номер" required />
 										</div>
 									</div>
 
-									<div class="form__block form__block_delivery">
-										<h3 class="heading heading_level-3 form__block-title">Способ получения заказа</h3>
-										<div class="form__item form__item_button">
-											<button type="button" class="button button_selection form__button">Самовывоз</button>
-											<button type="button" class="button button_selection form__button selected">Доставка</button>
+									<div class="form__block">
+										<h3 class="heading heading_level-3">Способ получения заказа</h3>
+										<div class="form__item">
+											<button type="button" class="button button_selection popup-order__form-button">Самовывоз</button>
+											<button type="button" class="button button_selection popup-order__form-button selected">Доставка</button>
 										</div>
 									</div>
 
-									<div class="form__block form__block_address">
-										<h3 class="heading heading_level-3 form__block-title">Адрес</h3>
-										<div class="form__item form__item_select">
-											<select name="city" id="select-city" class="form__select">
-												<option disabled value="null" class="form__option" selected>Город</option>
-												<option value="0" class="form__option">Москва</option>
-												<option value="1" class="form__option">Химки</option>
-												<option value="2" class="form__option">Санкт-Петербург</option>
+									<div class="form__block">
+										<h3 class="heading heading_level-3">Адрес</h3>
+										<div class="form__item">
+											<select name="city" id="select-city" class="select">
+												<option disabled value="null" class="option" selected>Город</option>
+												<option value="0" class="option">Москва</option>
+												<option value="1" class="option">Химки</option>
+												<option value="2" class="option">Санкт-Петербург</option>
 											</select>
 										</div>
-										<div class="form__item form__item_textarea">
-											<textarea name="address" id="address" cols="30" rows="4" class="form__textarea" placeholder="Адрес" required></textarea>
+										<div class="form__item">
+											<textarea name="address" id="address" cols="30" rows="4" class="textarea" placeholder="Адрес" required></textarea>
 										</div>
 									</div>
 
-									<div class="form__block form__block_payment-type">
-										<h3 class="heading heading_level-3 form__block-title">Оплата</h3>
-										<div class="form__item form__item_radio">
-											<label for="online-pay" class="form__label form__label_radio">
-												<input type="radio" name="pay" id="online-pay" class="form__radio" value="online-pay" checked />
-												<span class="form__radio-box"></span>
-												<span class="form__radio-text">Online-оплата</span>
+									<div class="form__block">
+										<h3 class="heading heading_level-3">Оплата</h3>
+										<div class="form__item">
+											<label for="online-pay" class="form__label">
+												<input type="radio" name="pay" id="online-pay" class="radio" value="online-pay" checked />
+												<span class="radio-box"></span>
+												<span class="radio-text">Online-оплата</span>
 											</label>
 										</div>
-										<div class="form__item form__item_radio">
-											<label for="cash-pay" class="form__label form__label_radio">
-												<input type="radio" name="pay" id="cash-pay" class="form__radio" value="cash-pay" />
-												<span class="form__radio-box"></span>
-												<span class="form__radio-text">Наличными</span>
+										<div class="form__item">
+											<label for="cash-pay" class="form__label">
+												<input type="radio" name="pay" id="cash-pay" class="radio" value="cash-pay" />
+												<span class="radio-box"></span>
+												<span class="radio-text">Наличными</span>
 											</label>
 										</div>
-										<div class="form__item form__item_radio">
-											<label for="card-pay" class="form__label form__label_radio">
-												<input type="radio" name="pay" id="card-pay" class="form__radio" value="card-pay" />
-												<span class="form__radio-box"></span>
-												<span class="form__radio-text">Картой при получении</span>
-											</label>
-										</div>
-									</div>
-
-									<div class="form__block form__block_payment-type">
-										<h3 class="heading heading_level-3 form__block-title">Уведомления</h3>
-										<div class="form__item form__item_checkbox">
-											<label for="sms" class="form__label form__label_checkbox">
-												<input type="checkbox" name="sms" id="sms" class="form__checkbox" />
-												<span class="form__checkbox-box"></span>
-												<span class="form__checkbox-text">Хочу получать SMS уведомления</span>
+										<div class="form__item">
+											<label for="card-pay" class="form__label">
+												<input type="radio" name="pay" id="card-pay" class="radio" value="card-pay" />
+												<span class="radio-box"></span>
+												<span class="radio-text">Картой при получении</span>
 											</label>
 										</div>
 									</div>
 
-									<div class="form__item form__item_button">
-										<button type="submit" class="button form__button form__button_submit">Оформить заказ</button>
+									<div class="form__block">
+										<h3 class="heading heading_level-3">Уведомления</h3>
+										<div class="form__item">
+											<label for="sms" class="form__label">
+												<input type="checkbox" name="sms" id="sms" class="checkbox" />
+												<span class="checkbox-box"></span>
+												<span class="checkbox-text">Хочу получать SMS уведомления</span>
+											</label>
+										</div>
+									</div>
+
+									<div class="form__item">
+										<button type="submit" class="button popup-order__form-button popup-order__form-button_submit">Оформить заказ</button>
 									</div>
 								</div>
 							</form>
 						</div>
 					</div>
-					<div class="column column_l-1 d-none d-block_m"></div>
-					<div class="column column_m-3 column_l-4 d-none d-block_s">
+					<div class="column column_s-0 column_l-1"></div>
+					<div class="column column_s-0 column_m-3 column_l-4">
 						<div class="popup-order__product">
 							<div class="product-card popup-order__card">
 								<div class="product-card__image-container">
@@ -338,7 +332,7 @@
 									<span class="product-card__old-price">690</span>
 									390 ₽
 								</div>
-								<div class="product-card__descr">Красная хлопоковая футболка с&nbsp;коротким руковом</div>
+								<div class="product-card__description">Красная хлопоковая футболка с&nbsp;коротким руковом</div>
 								<div class="product-card__sizing-container">
 									<button class="button button_selection product-card__sizing-button">XS</button>
 									<button class="button button_selection product-card__sizing-button selected">S</button>

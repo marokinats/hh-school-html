@@ -1,14 +1,14 @@
 .carousel-section {
 	background-color: #f9f9f9;
-	padding: 30px 0;
+	// padding: 30px 0;
 	position: relative;
 
 	@media @screen-gt-s {
-		padding: 57px 0;
+		// padding: 57px 0;
 	}
 
 	@media @screen-gt-m {
-		padding: 60px 0;
+		// padding: 60px 0;
 	}
 }
 
@@ -17,6 +17,9 @@
 	align-items: center;
 	flex-wrap: wrap;
 	text-align: center;
+	min-height: 410px;
+	max-width: 300px;
+	margin: 0 auto;
 
 	&[data-card="2"] {
 		display: none;
@@ -25,9 +28,15 @@
 	@media @screen-gt-s {
 		flex-wrap: nowrap;
 		text-align: left;
+		min-height: 340px;
+		max-width: 100%;
+		margin: 0;
+	}
+	@media @screen-gt-m {
+		min-height: 480px;
 	}
 
-	&__descr {
+	&__description {
 		width: 100%;
 		order: 2;
 
@@ -49,12 +58,10 @@
 		&-container {
 			width: 100%;
 			order: 1;
-			margin-bottom: 40px;
 
 			@media @screen-gt-s {
 				width: 50%;
 				order: 2;
-				margin-bottom: 0;
 			}
 		}
 	}
@@ -65,7 +72,6 @@
 	left: 50%;
 	transform: translateX(-50%);
 	bottom: 160px;
-	cursor: pointer;
 
 	@media @screen-gt-s {
 		bottom: 20px;
@@ -81,17 +87,13 @@
 		background: #dfdedd;
 		border-radius: 50%;
 		margin-right: 5px;
-		transition-duration: 0.2s;
-		transition-timing-function: ease;
-		transition-property: background-color;
+		transition: background-color 0.2s ease;
+		cursor: pointer;
 		&:last-child {
 			margin-right: 0;
 		}
 		&_active {
 			background: #212122;
-			transition-duration: 0.2s;
-			transition-timing-function: ease;
-			transition-property: background-color;
 		}
 	}
 }
