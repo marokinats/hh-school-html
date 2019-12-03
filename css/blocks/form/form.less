@@ -6,13 +6,12 @@
 	}
 	&__block {
 		margin-bottom: 20px;
+		box-sizing: border-box;
 	}
 	&__item {
 		display: flex;
 		margin-bottom: 10px;
-		// &_button {
-		// 	display: flex;
-		// }
+		box-sizing: border-box;
 	}
 	&__input {
 		box-sizing: border-box;
@@ -36,15 +35,23 @@
 		}
 		&_phone-pre {
 			width: 38px;
+			border-right-width: 0;
 			&::placeholder {
 				color: @color-text;
 			}
 			&:-ms-input-placeholder {
 				color: @color-text;
 			}
+			&:focus {
+				border-right-width: 1px;
+			}
 		}
 		&_phone-code {
 			width: 63px;
+			border-right-width: 0;
+			&:focus {
+				border-right-width: 1px;
+			}
 		}
 		&_phone-number {
 			width: 100%;
@@ -53,6 +60,7 @@
 	&__button {
 		width: 50%;
 		max-width: 138px;
+		box-sizing: border-box;
 		&_submit {
 			max-width: 100%;
 			width: 100%;
@@ -76,10 +84,6 @@
 		background-repeat: no-repeat;
 		background-position: 98% center;
 		cursor: pointer;
-		&:focus,
-		&:active {
-			border-color: #c5c9ca;
-		}
 	}
 	&__option {
 		box-sizing: border-box;
@@ -120,10 +124,16 @@
 			border-radius: 2px;
 			background: #ffffff;
 			margin-right: 10px;
+			transition-duration: 0.2s;
+			transition-timing-function: ease;
+			transition-property: background-image;
 		}
 		&:checked + & {
 			&-box {
 				background: url("check.svg") no-repeat center center;
+				transition-duration: 0.2s;
+				transition-timing-function: ease;
+				transition-property: background-image;
 			}
 		}
 	}
@@ -146,6 +156,9 @@
 			&-box {
 				border: none;
 				background: url("radio.svg") no-repeat center center;
+				transition-duration: 0.2s;
+				transition-timing-function: ease;
+				transition-property: border, background-image, background-color;
 			}
 		}
 	}

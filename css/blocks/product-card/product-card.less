@@ -37,4 +37,21 @@
 		top: 10px;
 		left: 10px;
 	}
+	&__descr {
+		margin: 10px 0 15px;
+		color: @color-hell;
+	}
+	&__sizing {
+		&-container {
+			display: flex;
+		}
+		&-button {
+			flex: 1 0 49px;
+			padding: 0;
+			border-right-width: 0;
+			&:last-child {
+				border-right-width: 1px;
+			}
+		}
+	}
 }
