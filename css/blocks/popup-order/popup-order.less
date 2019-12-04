@@ -1,31 +1,47 @@
 .popup-order {
-	padding: 20px 0;
+  padding: 20px 0;
 
-	@media @screen-gt-s {
-		padding: 30px 0;
-	}
-	@media @screen-gt-m {
-		padding: 40px 0;
-	}
-	&__form {
-		&-title {
-			margin-bottom: 25px;
-		}
-		&-button {
-			width: 50%;
-			max-width: 138px;
-			&_submit {
-				max-width: 100%;
-				width: 100%;
-				@media @screen-gt-s {
-					max-width: 138px;
-				}
-			}
-		}
-	}
-	&__product {
-		padding-top: 105px;
-		max-width: 290px;
-		margin-left: auto;
-	}
+  @media @screen-gt-s {
+    padding: 30px 0;
+  }
+
+  @media @screen-gt-m {
+    padding: 40px 0;
+  }
+
+  &__form {
+    &-title {
+      margin-bottom: 25px;
+    }
+
+    &-label {
+      width: 50%;
+
+      @media @screen-gt-s {
+        width: auto;
+
+      }
+    }
+
+    &-button {
+      width: 100%;
+
+      @media @screen-gt-s {
+        width: 123px;
+      }
+
+      &_submit {
+        @media @screen-gt-s {
+          width: 138px;
+        }
+      }
+
+    }
+  }
+
+  &__product {
+    padding-top: 105px;
+    max-width: 290px;
+    margin-left: auto;
+  }
 }

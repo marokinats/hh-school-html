@@ -1,92 +1,95 @@
 .carousel-section {
-	background-color: #f9f9f9;
-	position: relative;
+  background-color: #f9f9f9;
+  position: relative;
 }
 
 .carousel-card {
-	display: flex;
-	align-items: center;
-	flex-wrap: wrap;
-	text-align: center;
-	min-height: 410px;
-	max-width: 300px;
-	margin: 0 auto;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+  min-height: 410px;
+  max-width: 300px;
+  margin: 0 auto;
 
-	&[data-card="2"] {
-		display: none;
-	}
+  &[data-card="2"] {
+    display: none;
+  }
 
-	@media @screen-gt-s {
-		flex-wrap: nowrap;
-		text-align: left;
-		min-height: 340px;
-		max-width: 100%;
-		margin: 0;
-	}
-	@media @screen-gt-m {
-		min-height: 480px;
-	}
+  @media @screen-gt-s {
+    flex-wrap: nowrap;
+    text-align: left;
+    min-height: 340px;
+    max-width: 100%;
+    margin: 0;
+  }
 
-	&__description {
-		width: 100%;
-		order: 2;
+  @media @screen-gt-m {
+    min-height: 480px;
+  }
 
-		@media @screen-gt-s {
-			width: 50%;
-			order: 1;
-		}
+  &__description {
+    width: 100%;
+    order: 2;
 
-		&-title {
-			margin-bottom: 10px;
+    @media @screen-gt-s {
+      width: 50%;
+      order: 1;
+    }
 
-			@media @screen-gt-s {
-				margin-bottom: 20px;
-			}
-		}
-	}
+    &-title {
+      margin-bottom: 10px;
 
-	&__image {
-		display: block;
+      @media @screen-gt-s {
+        margin-bottom: 20px;
+      }
+    }
+  }
 
-		&-container {
-			width: 100%;
-			order: 1;
+  &__image {
+    display: block;
 
-			@media @screen-gt-s {
-				width: 50%;
-				order: 2;
-			}
-		}
-	}
+    &-container {
+      width: 100%;
+      order: 1;
+
+      @media @screen-gt-s {
+        width: 50%;
+        order: 2;
+      }
+    }
+  }
 }
 
 .carousel-dots {
-	position: absolute;
-	left: 50%;
-	transform: translateX(-50%);
-	bottom: 160px;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 160px;
 
-	@media @screen-gt-s {
-		bottom: 20px;
-	}
+  @media @screen-gt-s {
+    bottom: 20px;
+  }
 
-	&__list {
-		display: flex;
-	}
+  &__list {
+    display: flex;
+  }
 
-	&__item {
-		width: 8px;
-		height: 8px;
-		background: #dfdedd;
-		border-radius: 50%;
-		margin-right: 5px;
-		transition: background-color 0.2s ease;
-		cursor: pointer;
-		&:last-child {
-			margin-right: 0;
-		}
-		&_active {
-			background: #212122;
-		}
-	}
+  &__item {
+    width: 8px;
+    height: 8px;
+    background: #dfdedd;
+    border-radius: 50%;
+    margin-right: 5px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &_active {
+      background: #212122;
+    }
+  }
 }
