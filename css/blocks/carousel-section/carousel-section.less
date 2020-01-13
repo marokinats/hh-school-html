@@ -1,31 +1,69 @@
+@import "../../common/columns/columns.less";
+
+@keyframes slide {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(-100%, 0);
+  }
+}
+
 .carousel-section {
   background-color: #f9f9f9;
   position: relative;
+  padding-bottom: 20px;
+
+  &__cards-wrapper {
+    .columns-row();
+    flex-wrap: nowrap;
+    overflow: hidden;
+    width: 100%;
+    margin: 0;
+    @media @screen-gt-s {
+      margin: 0;
+    }
+  }
 }
 
 .carousel-card {
-  display: flex;
+  flex: 0 0 auto;
+  display: none;
   align-items: center;
   flex-wrap: wrap;
   text-align: center;
-  min-height: 410px;
+  min-height: 380px;
   max-width: 300px;
   margin: 0 auto;
-
-  &[data-card="2"] {
-    display: none;
-  }
+  position: relative;
 
   @media @screen-gt-s {
     flex-wrap: nowrap;
     text-align: left;
-    min-height: 340px;
+    min-height: 300px;
     max-width: 100%;
     margin: 0;
   }
 
   @media @screen-gt-m {
-    min-height: 480px;
+    min-height: 430px;
+  }
+
+  &_active {
+    display: flex;
+  }
+
+  &_hide {
+    display: flex;
+    animation: slide 0.5s ease-in;
+    animation-fill-mode: forwards;
+  }
+
+  &_show {
+    display: flex;
+    animation: slide 0.5s ease-in;
+    animation-fill-mode: forwards;
   }
 
   &__description {
@@ -62,13 +100,11 @@
 }
 
 .carousel-dots {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: 160px;
+  .columns-row();
+  justify-content: center;
 
   @media @screen-gt-s {
-    bottom: 20px;
+    // bottom: 20px;
   }
 
   &__list {
