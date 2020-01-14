@@ -1,57 +1,134 @@
-import {hideBodyScroll, showBodyScroll} from './bodyScroll.js';
+import { hideBodyScroll, showBodyScroll } from './bodyScroll.js';
+import { initFormFields } from './validation.js';
 
 const popupOrder = document.querySelector('#popup-order'),
-  popupProductCard = document.querySelector('.popup-order__card'),
-  closeBtn = document.querySelector('#popup-close');
+  popupPreOrder = document.querySelector('#popup-preorder'),
+  popupOrderProductCard = document.querySelector('.popup-order__card'),
+  popupPreOrderProductCard = document.querySelector('.popup-preorder__card');
 
-let productCard;
+export let productCard;
 
-document.addEventListener('click', function (e) {
+// init popup-preorder
+let productCards = document.querySelectorAll('.product-card');
+productCards = Array.from(productCards);
 
-  if (!e.target.classList.contains('product-card__order-button')) return;
+productCards.forEach(element => {
 
-  const button = e.target;
+  element.addEventListener('click', function (e) {
 
-  productCard = button.parentNode.parentNode;
+    productCard = element;
+    popupPreOrderProductCard.innerHTML = productCard.innerHTML;
+    popupPreOrderProductCard.dataset.product = productCard.dataset.product;
+    productCard.innerHTML = '';
 
-  const cardContent = productCard.innerHTML;
+    let active = false;
 
-  popupProductCard.innerHTML = cardContent;
-  productCard.innerHTML = '';
+    Array.from(popupPreOrderProductCard.lastElementChild.previousElementSibling.children)
+      .forEach(element => {
+        if (element.firstElementChild.lastElementChild.classList.contains('active')) {
+          active = true;
+        }
+      });
 
-  popupOrder.style.display = 'block';
+    if (popupPreOrderProductCard.lastElementChild.previousElementSibling.classList.contains('product-card__sizing-container') && !active) {
+      popupPreOrderProductCard.lastElementChild.classList.add('disabled');
+    }
 
-  hideBodyScroll();
+    popupPreOrder.style.display = 'block';
+
+    hideBodyScroll();
+  })
 })
 
+// init popup-order
+export let chosenSize;
+popupPreOrder.addEventListener('click', function (e) {
 
-closeBtn.addEventListener('click', () => {
+  if (e.target.classList.contains('product-card__order-button') && !e.target.classList.contains('disabled')) {
+
+    popupOrderProductCard.innerHTML = popupPreOrderProductCard.innerHTML;
+    popupOrderProductCard.dataset.product = popupPreOrderProductCard.dataset.product;
+    popupPreOrderProductCard.innerHTML = '';
+
+    popupPreOrder.style.display = 'none';
+    popupOrder.style.display = 'block';
+  }
+  else if (e.target.classList.contains('product-card__sizing-button')) {
+    chosenSize = e.target;
+    setSize(chosenSize);
+
+    // const buttons = document.querySelectorAll('.product-card__sizing-button');
+
+    // buttons.forEach(item => {
+    //   item.classList.remove('active');
+    //   item.previousElementSibling.removeAttribute('checked');
+    // })
+
+    // chosenSize.classList.add('active');
+    // chosenSize.previousElementSibling.setAttribute('checked', 'checked');
+    activateButtonPreOrder(popupPreOrderProductCard);
+  }
+  else {
+    return;
+  }
+})
+
+popupOrder.addEventListener('click', function (e) {
+
+  if (!e.target.classList.contains('product-card__sizing-button')) return;
+
+  chosenSize = e.target;
+  setSize(chosenSize);
+
+})
+
+// close popup
+document.addEventListener('click', (e) => {
+
+  if (!e.target.classList.contains('popup__close')) return;
 
   closePopupOrder();
 
 })
 
-
-// Sizing
-document.addEventListener('click', (e) => {
-  if (!e.target.classList.contains('product-card__sizing-button')) return;
-
-  const button = e.target;
+function setSize(element) {
   const buttons = document.querySelectorAll('.product-card__sizing-button');
-  buttons.forEach((item) => {
+
+  buttons.forEach(item => {
     item.classList.remove('active');
-    item.previousSibling.removeAttribute('checked');
+    item.previousElementSibling.removeAttribute('checked');
   })
 
-  button.classList.add('active');
-  button.previousSibling.setAttribute('checked', 'checked');
-})
+  element.classList.add('active');
+  element.previousElementSibling.setAttribute('checked', 'checked');
+}
+
+function activateButtonPreOrder(parentNode) {
+
+  let sizingContainers = document.querySelectorAll('.product-card__sizing-container');
+  sizingContainers = Array.from(sizingContainers);
+
+  let currentSizingContainer;
+
+  sizingContainers.forEach(element => {
+    if (element.parentElement == parentNode) {
+
+      currentSizingContainer = element;
+    }
+  });
+
+  currentSizingContainer.nextElementSibling.classList.remove('disabled');
+}
 
 export function closePopupOrder() {
+  popupPreOrder.style.display = 'none';
   popupOrder.style.display = 'none';
+
+  initFormFields();
 
   showBodyScroll();
 
-  productCard.innerHTML = popupProductCard.innerHTML;
-  popupProductCard.innerHTML = '';
+  productCard.innerHTML = popupPreOrderProductCard.innerHTML ? popupPreOrderProductCard.innerHTML : popupOrderProductCard.innerHTML;
+  popupPreOrderProductCard.innerHTML = '';
+  popupOrderProductCard.innerHTML = '';
 }

@@ -1,0 +1,43 @@
+.popup {
+  display: none;
+  height: 100%;
+  left: 0;
+  position: fixed;
+  -webkit-tap-highlight-color: transparent;
+  top: 0;
+  -ms-touch-action: manipulation;
+  touch-action: manipulation;
+  transform: translateZ(0);
+  width: 100%;
+  z-index: 9998;
+  overflow-y: auto;
+  background-color: transparent;
+  transition: all 0.5s ease;
+
+  &__close {
+    width: 40px;
+    height: 40px;
+    background-color: #ffffff;
+    border-radius: 50%;
+    position: absolute;
+    right: -5px;
+    top: -5px;
+    cursor: pointer;
+    z-index: 9999;
+
+    &::before {
+      content: '';
+      width: 14px;
+      height: 14px;
+      background: url('close-icon.svg') no-repeat center center / cover;
+      position: absolute;
+      top: 15px;
+      right: 15px;
+    }
+  }
+
+  &__content {
+    width: 100%;
+    overflow: hidden;
+  }
+}

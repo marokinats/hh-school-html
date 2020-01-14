@@ -1,4 +1,5 @@
-import {closePopupOrder} from './order.js';
+import {closePopupOrder, chosenSize, productCard} from './order.js';
+import {initFormFields} from './validation.js';
 
 const orderForm = document.querySelector('.popup-order__form');
 
@@ -26,8 +27,11 @@ orderForm.addEventListener('submit', (e) => {
     
   })
   console.log('phone :', phone);
+  console.log('product :', productCard.dataset.product);
+  console.log('chosen size :', chosenSize.innerText);
   console.log('orderForm submited');
 
   closePopupOrder();
-  // initFormFields();
+  
+  initFormFields();
 })

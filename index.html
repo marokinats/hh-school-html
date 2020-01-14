@@ -98,29 +98,29 @@
       <h2 class="heading heading_level-2">Популярные товары</h2>
       <div class="columns-row">
         <div class="column column_s-1 column_m-2 column_l-4">
-          <div class="product-card">
+          <div class="product-card" data-product="unbrella">
             <div class="product-card__image-container">
               <img class="product-card__image" src="images/product-1.jpg" alt="Зонт" />
             </div>
             <div class="product-card__name">Зонт</div>
             <div class="product-card__price">1&nbsp;990 ₽</div>
             <div class="product-card__description">Красный элегантный зонт</div>
-            <div class="product-card__order-button-container"><button class="button product-card__order-button" data-src="#popup-order">Заказать</button></div>
+            <button class="button product-card__order-button">Заказать</button>
           </div>
         </div>
         <div class="column column_s-1 column_m-2 column_l-4">
-          <div class="product-card">
+          <div class="product-card" data-product="bag">
             <div class="product-card__image-container">
               <img class="product-card__image" src="images/product-2.jpg" alt="Сумка" />
             </div>
             <div class="product-card__name">Сумка</div>
             <div class="product-card__price">290 ₽</div>
             <div class="product-card__description">Красная стильная сумка из переработанного хлопка</div>
-            <div class="product-card__order-button-container"><button class="button product-card__order-button" data-src="#popup-order">Заказать</button></div>
+            <button class="button product-card__order-button">Заказать</button>
           </div>
         </div>
         <div class="column column_s-1 column_m-2 column_l-4">
-          <div class="product-card">
+          <div class="product-card" data-product="slippers">
             <div class="product-card__image-container">
               <img class="product-card__image" src="images/product-3.jpg" alt="Шлепанцы" />
             </div>
@@ -133,11 +133,11 @@
               <div class="product-card__sizing-box"><label for="slippers-37"><input type="radio" name="size" class="radio" id="slippers-37" value="37"><span class="radio-button product-card__sizing-button">37</span></label></div>
               <div class="product-card__sizing-box"><label for="slippers-38"><input type="radio" name="size" class="radio" id="slippers-38" value="38"><span class="radio-button product-card__sizing-button">38</span></label></div>
             </div>
-            <div class="product-card__order-button-container"><button class="button product-card__order-button" data-src="#popup-order">Заказать</button></div>
+            <button class="button product-card__order-button">Заказать</button>
           </div>
         </div>
         <div class="column column_s-1 column_m-2 column_l-4">
-          <div class="product-card">
+          <div class="product-card" data-product="t-shirt">
             <div class="product-card__image-container">
               <img class="product-card__image" src="images/product-4.jpg" alt="Футболка" />
               <div class="product-card__sale">sale</div>
@@ -156,11 +156,11 @@
               <div class="product-card__sizing-box"><label for="t-shirt-XL"><input type="radio" name="size" class="radio" id="t-shirt-XL" value="XL"><span class="radio-button product-card__sizing-button">XL</span></label></div>
               <div class="product-card__sizing-box"><label for="t-shirt-XXL"><input type="radio" name="size" class="radio" id="t-shirt-XXL" value="XXL"><span class="radio-button product-card__sizing-button">XXL</span></label></div>
             </div>
-            <div class="product-card__order-button-container"><button class="button product-card__order-button" data-src="#popup-order">Заказать</button></div>
+            <button class="button product-card__order-button">Заказать</button>
           </div>
         </div>
         <div class="column column_s-1 column_m-2 column_l-4">
-          <div class="product-card">
+          <div class="product-card" data-product="hoodie">
             <div class="product-card__image-container">
               <img class="product-card__image" src="images/product-5.jpg" alt="Толстовка" />
             </div>
@@ -174,18 +174,18 @@
               <div class="product-card__sizing-box"><label for="hoodie-L"><input type="radio" name="size" class="radio" id="hoodie-L" value="L"><span class="radio-button product-card__sizing-button">L</span></label></div>
               <div class="product-card__sizing-box"><label for="hoodie-XL"><input type="radio" name="size" class="radio" id="hoodie-XL" value="XL"><span class="radio-button product-card__sizing-button">XL</span></label></div>
             </div>
-            <div class="product-card__order-button-container"><button class="button product-card__order-button" data-src="#popup-order">Заказать</button></div>
+            <button class="button product-card__order-button">Заказать</button>
           </div>
         </div>
         <div class="column column_s-1 column_m-2 column_l-4">
-          <div class="product-card">
+          <div class="product-card" data-product="pillow">
             <div class="product-card__image-container">
               <img class="product-card__image" src="images/product-6.jpg" alt="Подушка" />
             </div>
             <div class="product-card__name">Подушка</div>
             <div class="product-card__price">990 ₽</div>
             <div class="product-card__description">Красная декоративная подушка</div>
-            <div class="product-card__order-button-container"><button class="button product-card__order-button" data-src="#popup-order">Заказать</button></div>
+            <button class="button product-card__order-button">Заказать</button>
           </div>
         </div>
       </div>
@@ -254,8 +254,9 @@
   </footer>
 
   <div class="popup-order popup" id="popup-order">
-    <div id="popup-close" class="popup__close">&times;</div>
+
     <div class="popup-content">
+      <div class="popup__close"></div>
       <div class="columns-wrapper">
         <div class="columns-row">
           <div class="column column_s-2 column_m-3 column_l-7">
@@ -267,15 +268,15 @@
                   <div class="form__block">
                     <h3 class="heading heading_level-3">Контактное лицо</h3>
                     <div class="form__item">
-                      <input type="text" id="popup-order-name" class="input" placeholder="ФИО" name="name" required autocomplete="off"/>
+                      <input type="text" id="popup-order-name" class="input" placeholder="ФИО" name="name" required autocomplete="off" />
                     </div>
                     <div class="form__item">
-                      <input type="text" class="input" placeholder="Электронная почта" name="email" required autocomplete="off"/>
+                      <input type="text" class="input" placeholder="Электронная почта" name="email" required autocomplete="off" />
                     </div>
                     <div class="form__item">
-                      <input type="text" class="input input_phone-pre" placeholder="+7" name="phone-pre" required value="+7" autocomplete="off"/>
-                      <input type="text" class="input input_phone-code" placeholder="Код" name="phone-code" required autocomplete="off"/>
-                      <input type="text" class="input input_phone-number" placeholder="Номер" name="phone-number" required autocomplete="off"/>
+                      <input type="text" class="input input_phone-pre" placeholder="+7" name="phone-pre" required value="+7" autocomplete="off" />
+                      <input type="text" class="input input_phone-code" placeholder="Код" name="phone-code" required autocomplete="off" />
+                      <input type="text" class="input input_phone-number" placeholder="Номер" name="phone-number" required autocomplete="off" />
                       <input type="hidden" name="phone">
                     </div>
                   </div>
@@ -284,11 +285,11 @@
                     <h3 class="heading heading_level-3">Способ получения заказа</h3>
                     <div class="form__item">
                       <label class="form__label popup-order__form-label" for="delivery-01">
-                        <input type="radio" id="delivery-01" name="delivery" class="radio" value="devivery-01"/>
+                        <input type="radio" id="delivery-01" name="delivery" class="radio" value="devivery-01" />
                         <span class="radio-button popup-order__form-button">Самовывоз</span>
                       </label>
                       <label class="form__label popup-order__form-label" for="delivery-02">
-                        <input type="radio" id="delivery-02" name="delivery" class="radio" value="devivery-02"/>
+                        <input type="radio" id="delivery-02" name="delivery" class="radio" value="devivery-02" />
                         <span class="radio-button popup-order__form-button">Доставка</span>
                       </label>
                     </div>
@@ -297,7 +298,7 @@
                   <div class="form__block">
                     <h3 class="heading heading_level-3">Адрес</h3>
                     <div class="form__item">
-                      <input type="text" class="input" name="city" id="areas" placeholder="Город" required autocomplete="off"/>
+                      <input type="text" class="input" name="city" id="areas" placeholder="Город" required autocomplete="off" />
                     </div>
                     <div class="form__element">
                       <div id="input-suggests-areas" class="input-suggests input-suggests_areas popup-order__areas"></div>
@@ -352,59 +353,21 @@
           <div class="column column_s-0 column_m-0 column_l-1"></div>
           <div class="column column_s-0 column_m-3 column_l-4">
             <div class="popup-order__product">
-              <div class="product-card popup-order__card">
-                <!-- <div class="product-card__image-container">
-                  <img class="product-card__image" src="images/product-4.jpg" alt="Футболка" />
-                  <div class="product-card__sale">sale</div>
-                </div>
-                <div class="product-card__name">Футболка</div>
-                <div class="product-card__price">
-                  <span class="product-card__old-price">690</span>
-                  390 ₽
-                </div>
-                <div class="product-card__description">Красная хлопоковая футболка с&nbsp;коротким руковом</div>
-                <div class="product-card__sizing-container">
-                  <div class="product-card__sizing-box">
-                    <label class="" for="sixe-XS">
-                      <input type="radio" id="sixe-XS" name="size" class="radio" value="XS" />
-                      <span class="radio-button product-card__sizing-button">XS</span>
-                    </label>
-                  </div>
-                  <div class="product-card__sizing-box">
-                    <label class="" for="sixe-S">
-                      <input type="radio" id="sixe-S" name="size" class="radio" value="S" checked />
-                      <span class="radio-button product-card__sizing-button">S</span>
-                    </label>
-                  </div>
-                  <div class="product-card__sizing-box">
-                    <label class="" for="sixe-M">
-                      <input type="radio" id="sixe-M" name="size" class="radio" value="M" />
-                      <span class="radio-button product-card__sizing-button">M</span>
-                    </label>
-                  </div>
-                  <div class="product-card__sizing-box">
-                    <label class="" for="sixe-L">
-                      <input type="radio" id="sixe-L" name="size" class="radio" value="L" checked />
-                      <span class="radio-button product-card__sizing-button">L</span>
-                    </label>
-                  </div>
-                  <div class="product-card__sizing-box">
-                    <label class="" for="sixe-XL">
-                      <input type="radio" id="sixe-XL" name="size" class="radio" value="XL" />
-                      <span class="radio-button product-card__sizing-button">XL</span>
-                    </label>
-                  </div>
-                  <div class="product-card__sizing-box">
-                    <label class="product-card__sizing-button" for="sixe-XXL">
-                      <input type="radio" id="sixe-XXL" name="size" class="radio" value="XXL" checked />
-                      <span class="radio-button product-card__sizing-button">XXL</span>
-                    </label>
-                  </div>
-                </div> -->
+              <div class="popup-order__card" data-product="">
+
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="popup-preorder popup" id="popup-preorder">
+    <div class="popup__content">
+      <div class="popup__close"></div>
+      <div class="popup-preorder__card" data-product="">
+
       </div>
     </div>
   </div>

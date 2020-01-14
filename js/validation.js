@@ -1,4 +1,4 @@
-function initFormFields() {
+export function initFormFields() {
 
   let inputs = document.getElementsByTagName('input'),
     textareas = document.getElementsByTagName('textarea');
@@ -7,23 +7,33 @@ function initFormFields() {
   textareas = Array.from(textareas);
 
   inputs.forEach(element => {
-    if (element.classList.contains('init')) {
-      element.classList.remove('init');
-    }
-    else {
-      element.classList.add('init');
-    }
-
+    element.classList.remove('init');
+    element.classList.add('init');
   });
 
   textareas.forEach(element => {
-    if (element.classList.contains('init')) {
-      element.classList.remove('init');
-    }
-    else {
-      element.classList.add('init');
-    }
+    element.classList.remove('init');
+    element.classList.add('init');
   });
+
+  // inputs.forEach(element => {
+  //   if (element.classList.contains('init')) {
+  //     element.classList.remove('init');
+  //   }
+  //   else {
+  //     element.classList.add('init');
+  //   }
+
+  // });
+
+  // textareas.forEach(element => {
+  //   if (element.classList.contains('init')) {
+  //     element.classList.remove('init');
+  //   }
+  //   else {
+  //     element.classList.add('init');
+  //   }
+  // });
 }
 
 initFormFields();
