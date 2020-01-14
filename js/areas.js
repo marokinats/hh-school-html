@@ -31,17 +31,22 @@ inputAreas.addEventListener('input', (e) => {
     subString = inputValue;
   }
 
-  let url = 'https://api.hh.ru/suggests/area_leaves?text=' + subString;
+  let url = 'https://api.hh.ru/suggests/area_leaves?text=';
+  let urlLength = url.length;
 
-  getData(url).then((response) => {
+  if ((url + subString).length >= (urlLength + 2)) {
+    url += subString;
 
-    let cities = JSON.parse(response);
+    getData(url).then((response) => {
 
-    suggestions = cities['items'];
-
-    showSuggestions(suggestions);
-
-  })
+      let cities = JSON.parse(response);
+  
+      suggestions = cities['items'];
+  
+      showSuggestions(suggestions);
+  
+    })
+  }
 })
 
 suggestionsWrapper.addEventListener('click', (e) => {
