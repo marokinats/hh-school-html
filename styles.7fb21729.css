@@ -999,6 +999,7 @@ ul {
   transform: translateZ(0);
   width: 100%;
   z-index: 9998;
+  overflow-x: hidden;
   overflow-y: auto;
   background-color: transparent;
   transition: all 0.5s ease;
@@ -1026,18 +1027,21 @@ ul {
 .popup__content {
   width: 100%;
   overflow: hidden;
+  position: relative;
 }
 .popup-order {
   background-color: #ffffff;
+}
+.popup-order .popup-content {
   padding: 20px 0;
 }
 @media (min-width: 768px) {
-  .popup-order {
+  .popup-order .popup-content {
     padding: 30px 0;
   }
 }
 @media (min-width: 1000px) {
-  .popup-order {
+  .popup-order .popup-content {
     padding: 40px 0;
   }
 }
