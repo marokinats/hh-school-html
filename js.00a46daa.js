@@ -418,12 +418,17 @@ inputAreas.addEventListener('input', function (e) {
     subString = inputValue;
   }
 
-  var url = 'https://api.hh.ru/suggests/area_leaves?text=' + subString;
-  getData(url).then(function (response) {
-    var cities = JSON.parse(response);
-    suggestions = cities['items'];
-    showSuggestions(suggestions);
-  });
+  var url = 'https://api.hh.ru/suggests/area_leaves?text=';
+  var urlLength = url.length;
+
+  if ((url + subString).length >= urlLength + 2) {
+    url += subString;
+    getData(url).then(function (response) {
+      var cities = JSON.parse(response);
+      suggestions = cities['items'];
+      showSuggestions(suggestions);
+    });
+  }
 });
 suggestionsWrapper.addEventListener('click', function (e) {
   var city = e.target.innerHTML;
@@ -516,7 +521,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58209" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59432" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
