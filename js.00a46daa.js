@@ -126,11 +126,369 @@ document.addEventListener('keydown', function (event) {
     grid.classList.toggle('grid_visible');
   }
 });
-},{}],"js/index.js":[function(require,module,exports) {
+},{}],"js/slider.js":[function(require,module,exports) {
+var active = document.querySelector('.js-slide.carousel-card_active');
+document.querySelector('.js-slide-buttons').addEventListener('click', function (e) {
+  var slideId = e.target.dataset.slideId;
+
+  if (!slideId) {
+    return;
+  }
+
+  if (active.dataset.slideId === slideId) {
+    return;
+  }
+
+  var slide = document.querySelector(".js-slide[data-slide-id=\"".concat(slideId, "\"]"));
+  slide.classList.add('carousel-card_show');
+  active.classList.add('carousel-card_hide');
+  active.classList.remove('carousel-card_active');
+  var previous = active;
+  active = slide;
+  document.querySelector(".js-slide-button[data-slide-id=\"".concat(previous.dataset.slideId, "\"]")).classList.remove('carousel-dots__item_active');
+  document.querySelector(".js-slide-button[data-slide-id=\"".concat(slideId, "\"]")).classList.add('carousel-dots__item_active');
+  active.addEventListener('animationend', function () {
+    active.classList.add('carousel-card_active');
+    active.classList.remove('carousel-card_show');
+    previous.classList.remove('carousel-card_hide');
+    active.parentNode.insertBefore(active, previous); // чтобы слайды не уходили постоянно влево, для transition
+  }, {
+    once: true
+  });
+});
+},{}],"js/bodyScroll.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.hideBodyScroll = hideBodyScroll;
+exports.showBodyScroll = showBodyScroll;
+var windowScrollTop;
+
+function hideBodyScroll() {
+  document.body.classList.add('no-scroll');
+  windowScrollTop = window.pageYOffset; // текущая прокрутка сверху
+
+  document.body.style.position = 'fixed';
+
+  if (hasScrollbar()) {
+    // с учетом горизонтального скролла. Чтобы небыло рывка при открытии модального окна
+    document.body.style.width = "calc(100% - ".concat(getScrollbarSize(), "px)");
+  } else {
+    document.body.style.width = '100%';
+  }
+
+  document.body.style.top = -windowScrollTop + 'px';
+}
+
+function getScrollbarSize() {
+  // получение ширины скролла
+  var outer = document.createElement('div');
+  outer.style.visibility = 'hidden';
+  outer.style.width = '100px';
+  outer.style.msOverflowStyle = 'scrollbar'; // needed for WinJS apps
+
+  document.body.appendChild(outer);
+  var widthNoScroll = outer.offsetWidth; // force scrollbars
+
+  outer.style.overflow = 'scroll';
+  var inner = document.createElement('div');
+  inner.style.width = '100%';
+  outer.appendChild(inner);
+  var widthWithScroll = inner.offsetWidth;
+  outer.parentNode.removeChild(outer);
+  return widthNoScroll - widthWithScroll;
+}
+
+function hasScrollbar() {
+  // проверка на боковой скролл
+  return document.body.scrollHeight > document.body.clientHeight;
+}
+
+function showBodyScroll() {
+  document.body.classList.remove('no-scroll');
+  document.body.style.position = '';
+  document.body.style.width = '';
+  document.body.style.top = '';
+  window.scroll(0, windowScrollTop);
+}
+},{}],"js/validation.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.initFormFields = initFormFields;
+
+function initFormFields() {
+  var inputs = document.getElementsByTagName('input'),
+      textareas = document.getElementsByTagName('textarea');
+  inputs = Array.from(inputs);
+  textareas = Array.from(textareas);
+  inputs.forEach(function (element) {
+    element.classList.remove('init');
+    element.classList.add('init');
+  });
+  textareas.forEach(function (element) {
+    element.classList.remove('init');
+    element.classList.add('init');
+  }); // inputs.forEach(element => {
+  //   if (element.classList.contains('init')) {
+  //     element.classList.remove('init');
+  //   }
+  //   else {
+  //     element.classList.add('init');
+  //   }
+  // });
+  // textareas.forEach(element => {
+  //   if (element.classList.contains('init')) {
+  //     element.classList.remove('init');
+  //   }
+  //   else {
+  //     element.classList.add('init');
+  //   }
+  // });
+}
+
+initFormFields();
+document.addEventListener('focusin', function (e) {
+  if (e.target.classList.contains('init')) {
+    e.target.classList.remove('init');
+  }
+});
+var regexpName = /^[А-Яа-яЁёA-Za-z]{1}[А-Яа-яЁёA-Za-z-]*[\s][А-Яа-яЁёA-Za-z]{1}[А-Яа-яЁёA-Za-z-]*([А-Яа-яЁёA-Za-z-\s])*$/,
+    regexpEmail = /^[\w]{1}[\w-\.]*@[\w-]+\.[a-z]{2,4}$/i,
+    regexpCode = /^[+]{1}\d{1,5}$/,
+    regexpNumber = /^[\d]{3,7}$/;
+
+function validateFormFields(field) {
+  if (field.getAttribute('name') === 'name') {
+    return [regexpName.test(field.value), 'Введите данные в формате Фамилия Имя Отчество'];
+  } else if (field.getAttribute('name') === 'email') {
+    return [regexpEmail.test(field.value), 'Введите эл.почту в формате email@domen'];
+  } else if (field.getAttribute('name') === 'phone-pre') {
+    return [regexpCode.test(field.value), 'Введите код страны в формате +7'];
+  } else if (field.getAttribute('name') === 'phone-code') {
+    return [regexpNumber.test(field.value), 'Код должен содержать только цифры'];
+  } else if (field.getAttribute('name') === 'phone-number') {
+    return [regexpNumber.test(field.value), 'Номер телефона должен содержать только цифры'];
+  }
+}
+
+document.addEventListener("input", function (e) {
+  var matchArr = validateFormFields(e.target);
+  if (matchArr === undefined) return;
+
+  if (!matchArr[0]) {
+    e.target.setCustomValidity(matchArr[1]);
+  } else {
+    e.target.setCustomValidity('');
+  }
+});
+},{}],"js/order.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.closePopupOrder = closePopupOrder;
+exports.chosenSize = exports.productCard = void 0;
+
+var _bodyScroll = require("./bodyScroll.js");
+
+var _validation = require("./validation.js");
+
+var popupOrder = document.querySelector('#popup-order'),
+    popupPreOrder = document.querySelector('#popup-preorder'),
+    popupOrderProductCard = document.querySelector('.popup-order__card'),
+    popupPreOrderProductCard = document.querySelector('.popup-preorder__card');
+var productCard; // init popup-preorder
+
+exports.productCard = productCard;
+var productCards = document.querySelectorAll('.product-card');
+productCards = Array.from(productCards);
+productCards.forEach(function (element) {
+  element.addEventListener('click', function (e) {
+    exports.productCard = productCard = element;
+    popupPreOrderProductCard.innerHTML = productCard.innerHTML;
+    popupPreOrderProductCard.dataset.product = productCard.dataset.product;
+    productCard.innerHTML = '';
+    var active = false;
+    Array.from(popupPreOrderProductCard.lastElementChild.previousElementSibling.children).forEach(function (element) {
+      if (element.firstElementChild.lastElementChild.classList.contains('active')) {
+        active = true;
+      }
+    });
+
+    if (popupPreOrderProductCard.lastElementChild.previousElementSibling.classList.contains('product-card__sizing-container') && !active) {
+      popupPreOrderProductCard.lastElementChild.classList.add('disabled');
+    }
+
+    popupPreOrder.style.display = 'block';
+    (0, _bodyScroll.hideBodyScroll)();
+  });
+}); // init popup-order
+
+var chosenSize;
+exports.chosenSize = chosenSize;
+popupPreOrder.addEventListener('click', function (e) {
+  if (e.target.classList.contains('product-card__order-button') && !e.target.classList.contains('disabled')) {
+    popupOrderProductCard.innerHTML = popupPreOrderProductCard.innerHTML;
+    popupOrderProductCard.dataset.product = popupPreOrderProductCard.dataset.product;
+    popupPreOrderProductCard.innerHTML = '';
+    popupPreOrder.style.display = 'none';
+    popupOrder.style.display = 'block';
+  } else if (e.target.classList.contains('product-card__sizing-button')) {
+    exports.chosenSize = chosenSize = e.target;
+    setSize(chosenSize);
+    activateButtonPreOrder(popupPreOrderProductCard);
+  } else if (e.target === popupPreOrder) {
+    closePopupOrder();
+  } else {
+    return;
+  }
+});
+popupOrder.addEventListener('click', function (e) {
+  if (!e.target.classList.contains('product-card__sizing-button')) return;
+  exports.chosenSize = chosenSize = e.target;
+  setSize(chosenSize);
+}); // close popup
+
+document.addEventListener('click', function (e) {
+  if (!e.target.classList.contains('popup__close')) return;
+  closePopupOrder();
+});
+
+function setSize(element) {
+  var buttons = document.querySelectorAll('.product-card__sizing-button');
+  buttons.forEach(function (item) {
+    item.classList.remove('active');
+    item.previousElementSibling.removeAttribute('checked');
+  });
+  element.classList.add('active');
+  element.previousElementSibling.setAttribute('checked', 'checked');
+}
+
+function activateButtonPreOrder(parentNode) {
+  var sizingContainers = document.querySelectorAll('.product-card__sizing-container');
+  sizingContainers = Array.from(sizingContainers);
+  var currentSizingContainer;
+  sizingContainers.forEach(function (element) {
+    if (element.parentElement == parentNode) {
+      currentSizingContainer = element;
+    }
+  });
+  currentSizingContainer.nextElementSibling.classList.remove('disabled');
+}
+
+function closePopupOrder() {
+  popupPreOrder.style.display = 'none';
+  popupOrder.style.display = 'none';
+  (0, _validation.initFormFields)();
+  (0, _bodyScroll.showBodyScroll)();
+  productCard.innerHTML = popupPreOrderProductCard.innerHTML ? popupPreOrderProductCard.innerHTML : popupOrderProductCard.innerHTML;
+  popupPreOrderProductCard.innerHTML = '';
+  popupOrderProductCard.innerHTML = '';
+}
+},{"./bodyScroll.js":"js/bodyScroll.js","./validation.js":"js/validation.js"}],"js/areas.js":[function(require,module,exports) {
+function getData(url) {
+  return new Promise(function (resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.send();
+
+    xhr.onload = function () {
+      resolve(xhr.response);
+    };
+
+    xhr.onerror = function () {
+      reject([]);
+    };
+  });
+}
+
+var suggestionsWrapper = document.querySelector('#input-suggests-areas'),
+    inputAreas = document.querySelector('#areas');
+var subString, suggestions;
+inputAreas.addEventListener('input', function (e) {
+  var inputValue = e.target.value;
+
+  if (inputValue.match(/[a-zA-Zа-яА-Я]/g)) {
+    subString = inputValue;
+  }
+
+  var url = 'https://api.hh.ru/suggests/area_leaves?text=' + subString;
+  getData(url).then(function (response) {
+    var cities = JSON.parse(response);
+    suggestions = cities['items'];
+    showSuggestions(suggestions);
+  });
+});
+suggestionsWrapper.addEventListener('click', function (e) {
+  var city = e.target.innerHTML;
+  inputAreas.value = city;
+  suggestionsWrapper.style.display = 'none';
+});
+
+function showSuggestions(suggestions) {
+  suggestionsWrapper.innerHTML = '';
+  suggestionsWrapper.style.display = 'block';
+  suggestions.forEach(function (element) {
+    var item = document.createElement('div');
+    item.classList.add('input-suggests__item');
+    item.innerHTML = element['text'];
+    suggestionsWrapper.appendChild(item);
+  });
+}
+},{}],"js/formSubmit.js":[function(require,module,exports) {
+"use strict";
+
+var _order = require("./order.js");
+
+var _validation = require("./validation.js");
+
+var orderForm = document.querySelector('.popup-order__form');
+orderForm.addEventListener('submit', function (e) {
+  e.preventDefault();
+  var phone = '';
+  Array.from(e.target.elements).forEach(function (element) {
+    if (element.getAttribute('type') === 'checkbox' && element.checked) {
+      console.log(element.getAttribute('name'), ':', element.value);
+    } else if (element.getAttribute('type') === 'radio' && element.checked) {
+      console.log(element.getAttribute('name'), ':', element.value);
+    } else if (element.getAttribute('name') === 'phone-pre' || element.getAttribute('name') === 'phone-code' || element.getAttribute('name') === 'phone-number') {
+      phone += element.value;
+    } else if (element.getAttribute('type') === 'text') {
+      console.log(element.getAttribute('name'), ':', element.value);
+    } else if (element.getAttribute('name') === 'address') {
+      console.log(element.getAttribute('name'), ':', element.value);
+    }
+  });
+  console.log('phone :', phone);
+  console.log('product :', _order.productCard.dataset.product);
+  console.log('chosen size :', _order.chosenSize.innerText);
+  console.log('orderForm submited');
+  (0, _order.closePopupOrder)();
+  (0, _validation.initFormFields)();
+});
+},{"./order.js":"js/order.js","./validation.js":"js/validation.js"}],"js/index.js":[function(require,module,exports) {
 "use strict";
 
 require("./grid");
-},{"./grid":"js/grid.js"}],"../../../AppData/Local/Yarn/Data/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+
+require("./slider");
+
+require("./bodyScroll");
+
+require("./validation");
+
+require("./order");
+
+require("./areas");
+
+require("./formSubmit");
+},{"./grid":"js/grid.js","./slider":"js/slider.js","./bodyScroll":"js/bodyScroll.js","./validation":"js/validation.js","./order":"js/order.js","./areas":"js/areas.js","./formSubmit":"js/formSubmit.js"}],"../../../AppData/Local/Yarn/Data/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -158,7 +516,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62530" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58209" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
