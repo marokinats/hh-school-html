@@ -47,6 +47,9 @@ inputAreas.addEventListener('input', (e) => {
   
     })
   }
+  else {
+    suggestionsWrapper.style.display = 'none';
+  }
 })
 
 suggestionsWrapper.addEventListener('click', (e) => {
