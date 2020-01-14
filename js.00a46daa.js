@@ -428,6 +428,8 @@ inputAreas.addEventListener('input', function (e) {
       suggestions = cities['items'];
       showSuggestions(suggestions);
     });
+  } else {
+    suggestionsWrapper.style.display = 'none';
   }
 });
 suggestionsWrapper.addEventListener('click', function (e) {
@@ -521,7 +523,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "59432" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "60691" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
