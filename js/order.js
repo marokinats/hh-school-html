@@ -57,16 +57,10 @@ popupPreOrder.addEventListener('click', function (e) {
     chosenSize = e.target;
     setSize(chosenSize);
 
-    // const buttons = document.querySelectorAll('.product-card__sizing-button');
-
-    // buttons.forEach(item => {
-    //   item.classList.remove('active');
-    //   item.previousElementSibling.removeAttribute('checked');
-    // })
-
-    // chosenSize.classList.add('active');
-    // chosenSize.previousElementSibling.setAttribute('checked', 'checked');
     activateButtonPreOrder(popupPreOrderProductCard);
+  }
+  else if (e.target === popupPreOrder) {
+    closePopupOrder();
   }
   else {
     return;
