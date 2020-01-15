@@ -9,7 +9,7 @@ export function initFormFields() {
   inputs.forEach(element => {
     element.classList.remove('init');
     element.classList.add('init');
-    
+
     if (element.previousElementSibling != null && element.previousElementSibling.classList.contains('form__note')) {
       element.parentNode.firstElementChild.remove();
     }
@@ -85,22 +85,18 @@ document.addEventListener("focusout", function (e) {
     note.classList.add('form__note');
     note.innerHTML = matchArr[1];
 
-    if (!offFocus.parentNode.classList.contains('form__item')) {
-      for (let i = 0; i < offFocus.closest('.form__item').children.length; i++) {
-        if (offFocus.closest('.form__item').children[i].firstElementChild.classList.contains('form__note')) {
-          flag = false;
-        }
-      }
-    }
+    flag = findNotes(offFocus.parentNode);
 
     if (flag) {
       offFocus.parentNode.insertBefore(note, offFocus);
+      offFocus.parentNode.classList.add('js-has-error');
       offFocus.classList.add('error');
     }
   }
   else {
     if (offFocus.previousElementSibling && offFocus.previousElementSibling.classList.contains('form__note')) {
       offFocus.previousElementSibling.remove();
+      offFocus.parentNode.classList.remove('js-has-error');
     }
   }
 });
@@ -115,6 +111,7 @@ document.addEventListener("input", function (e) {
   if (onFocus.previousElementSibling && onFocus.previousElementSibling.classList.contains('form__note')) {
     onFocus.previousElementSibling.remove();
     onFocus.classList.remove('error');
+    onFocus.parentNode.classList.remove('js-has-error');
   }
 });
 
@@ -157,3 +154,33 @@ document.addEventListener('click', function (e) {
     }
   }
 })
+
+function findNotes(element) {
+  let flag;
+
+  if (element.classList.contains('js-has-error')) {
+    return false;
+  }
+
+  if (element.classList.contains('js-form-item')) {
+
+    if (element.children.length > 1) {
+
+      for (let i = 0; i < element.children.length; i++) {
+        
+        if (element.children[i].classList.contains('js-has-error')) {
+          return false;
+        }
+        
+      }
+      flag = true;
+    }
+    else {
+      flag = true;
+    }
+    return flag;
+  }
+  else {
+   return findNotes(element.parentNode);
+  }
+}

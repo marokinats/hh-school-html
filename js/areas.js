@@ -1,4 +1,4 @@
-import { getData } from './request.js';
+import { getData, handleError } from './request.js';
 import config from './config.js';
 
 let suggestionsWrappers = document.querySelectorAll('.js-input-suggests-areas'),
@@ -35,15 +35,9 @@ document.addEventListener('input', (e) => {
         showSuggestions(suggestions);
       }
       catch (e) {
-        if (e.name == "SyntaxError") {
-          console.log(e.message);
-        } else {
-          throw e;
-        }
-        
+        handleError(e);
       }
-
-    }).catch(error => console.log(error));
+    })
   }
   else {
     suggestionsWrapper.style.display = 'none';
