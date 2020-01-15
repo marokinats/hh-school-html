@@ -18,10 +18,10 @@ orderForm.addEventListener('submit', (e) => {
     else if(element.getAttribute('name') === 'phone-pre' || element.getAttribute('name') === 'phone-code' || element.getAttribute('name') === 'phone-number') {
       phone += element.value;
     }
-    else if(element.getAttribute('type') === 'text' && element.value > 0) {
+    else if(element.getAttribute('type') === 'text' && element.value.length > 0) {
       console.log(element.getAttribute('name'),':', element.value);
     }
-    else if(element.getAttribute('name') === 'address' && element.value > 0) {
+    else if(element.getAttribute('name') === 'address' && element.value.length > 0) {
       console.log(element.getAttribute('name'),':', element.value);
     }
     
