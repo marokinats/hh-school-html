@@ -17,9 +17,8 @@ export function getData(url) {
       }
     };
 
-    xhr.onerror = function () {
-      let error = new Error("Network Error");
-        
+    xhr.onerror = function (error) {
+     
       reject(error);
     };
   }).catch(error => handleError(error));
