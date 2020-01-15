@@ -569,9 +569,9 @@ orderForm.addEventListener('submit', function (e) {
       console.log(element.getAttribute('name'), ':', element.value);
     } else if (element.getAttribute('name') === 'phone-pre' || element.getAttribute('name') === 'phone-code' || element.getAttribute('name') === 'phone-number') {
       phone += element.value;
-    } else if (element.getAttribute('type') === 'text' && element.value > 0) {
+    } else if (element.getAttribute('type') === 'text' && element.value.length > 0) {
       console.log(element.getAttribute('name'), ':', element.value);
-    } else if (element.getAttribute('name') === 'address' && element.value > 0) {
+    } else if (element.getAttribute('name') === 'address' && element.value.length > 0) {
       console.log(element.getAttribute('name'), ':', element.value);
     }
   });
@@ -634,7 +634,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50078" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51325" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
