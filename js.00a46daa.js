@@ -231,6 +231,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 exports.getData = getData;
+exports.handleError = handleError;
 
 function getData(url) {
   return new Promise(function (resolve, reject) {
@@ -239,13 +240,26 @@ function getData(url) {
     xhr.send();
 
     xhr.onload = function () {
-      resolve(xhr.response);
+      if (xhr.status >= 200 && xhr.status < 300) {
+        resolve(xhr.response);
+      } else {
+        var error = new Error(xhr.statusText);
+        error.code = xhr.status;
+        reject(error);
+      }
     };
 
     xhr.onerror = function () {
+      var error = new Error("Network Error");
       reject(error);
     };
+  }).catch(function (error) {
+    return handleError(error);
   });
+}
+
+function handleError(error) {
+  console.log('handleError:', error);
 }
 },{}],"js/validation.js":[function(require,module,exports) {
 "use strict";
@@ -318,22 +332,17 @@ document.addEventListener("focusout", function (e) {
     var note = document.createElement('span');
     note.classList.add('form__note');
     note.innerHTML = matchArr[1];
-
-    if (!offFocus.parentNode.classList.contains('form__item')) {
-      for (var i = 0; i < offFocus.closest('.form__item').children.length; i++) {
-        if (offFocus.closest('.form__item').children[i].firstElementChild.classList.contains('form__note')) {
-          flag = false;
-        }
-      }
-    }
+    flag = findNotes(offFocus.parentNode);
 
     if (flag) {
       offFocus.parentNode.insertBefore(note, offFocus);
+      offFocus.parentNode.classList.add('js-has-error');
       offFocus.classList.add('error');
     }
   } else {
     if (offFocus.previousElementSibling && offFocus.previousElementSibling.classList.contains('form__note')) {
       offFocus.previousElementSibling.remove();
+      offFocus.parentNode.classList.remove('js-has-error');
     }
   }
 });
@@ -345,6 +354,7 @@ document.addEventListener("input", function (e) {
   if (onFocus.previousElementSibling && onFocus.previousElementSibling.classList.contains('form__note')) {
     onFocus.previousElementSibling.remove();
     onFocus.classList.remove('error');
+    onFocus.parentNode.classList.remove('js-has-error');
   }
 });
 document.addEventListener('click', function (e) {
@@ -377,6 +387,32 @@ document.addEventListener('click', function (e) {
     }
   }
 });
+
+function findNotes(element) {
+  var flag;
+
+  if (element.classList.contains('js-has-error')) {
+    return false;
+  }
+
+  if (element.classList.contains('js-form-item')) {
+    if (element.children.length > 1) {
+      for (var i = 0; i < element.children.length; i++) {
+        if (element.children[i].classList.contains('js-has-error')) {
+          return false;
+        }
+      }
+
+      flag = true;
+    } else {
+      flag = true;
+    }
+
+    return flag;
+  } else {
+    return findNotes(element.parentNode);
+  }
+}
 },{}],"js/order.js":[function(require,module,exports) {
 "use strict";
 
@@ -520,14 +556,8 @@ document.addEventListener('input', function (e) {
         suggestions = cities['items'];
         showSuggestions(suggestions);
       } catch (e) {
-        if (e.name == "SyntaxError") {
-          console.log(e.message);
-        } else {
-          throw e;
-        }
+        (0, _request.handleError)(e);
       }
-    }).catch(function (error) {
-      return console.log(error);
     });
   } else {
     suggestionsWrapper.style.display = 'none';
@@ -634,7 +664,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "51325" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "58574" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};
