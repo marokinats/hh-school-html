@@ -126,6 +126,17 @@ document.addEventListener('keydown', function (event) {
     grid.classList.toggle('grid_visible');
   }
 });
+},{}],"js/config.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = void 0;
+var _default = {
+  areasUrl: 'https://api.hh.ru/suggests/area_leaves?text={}'
+};
+exports.default = _default;
 },{}],"js/slider.js":[function(require,module,exports) {
 var active = document.querySelector('.js-slide.carousel-card_active');
 document.querySelector('.js-slide-buttons').addEventListener('click', function (e) {
@@ -213,6 +224,29 @@ function showBodyScroll() {
   document.body.style.top = '';
   window.scroll(0, windowScrollTop);
 }
+},{}],"js/request.js":[function(require,module,exports) {
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.getData = getData;
+
+function getData(url) {
+  return new Promise(function (resolve, reject) {
+    var xhr = new XMLHttpRequest();
+    xhr.open('GET', url);
+    xhr.send();
+
+    xhr.onload = function () {
+      resolve(xhr.response);
+    };
+
+    xhr.onerror = function () {
+      reject(error);
+    };
+  });
+}
 },{}],"js/validation.js":[function(require,module,exports) {
 "use strict";
 
@@ -229,26 +263,15 @@ function initFormFields() {
   inputs.forEach(function (element) {
     element.classList.remove('init');
     element.classList.add('init');
+
+    if (element.previousElementSibling != null && element.previousElementSibling.classList.contains('form__note')) {
+      element.parentNode.firstElementChild.remove();
+    }
   });
   textareas.forEach(function (element) {
     element.classList.remove('init');
     element.classList.add('init');
-  }); // inputs.forEach(element => {
-  //   if (element.classList.contains('init')) {
-  //     element.classList.remove('init');
-  //   }
-  //   else {
-  //     element.classList.add('init');
-  //   }
-  // });
-  // textareas.forEach(element => {
-  //   if (element.classList.contains('init')) {
-  //     element.classList.remove('init');
-  //   }
-  //   else {
-  //     element.classList.add('init');
-  //   }
-  // });
+  });
 }
 
 initFormFields();
@@ -268,22 +291,90 @@ function validateFormFields(field) {
   } else if (field.getAttribute('name') === 'email') {
     return [regexpEmail.test(field.value), 'Введите эл.почту в формате email@domen'];
   } else if (field.getAttribute('name') === 'phone-pre') {
-    return [regexpCode.test(field.value), 'Введите код страны в формате +7'];
-  } else if (field.getAttribute('name') === 'phone-code') {
-    return [regexpNumber.test(field.value), 'Код должен содержать только цифры'];
-  } else if (field.getAttribute('name') === 'phone-number') {
-    return [regexpNumber.test(field.value), 'Номер телефона должен содержать только цифры'];
+    return [regexpCode.test(field.value), 'Введите код страны в формате +7, не более 5 цифр'];
+  } else if (field.getAttribute('name') === 'phone-code' || field.getAttribute('name') === 'phone-number') {
+    return [regexpNumber.test(field.value), 'Введите от 3 до 7 цифр'];
   }
 }
 
-document.addEventListener("input", function (e) {
+var onFocus, offFocus;
+document.addEventListener("focusin", function (e) {
   var matchArr = validateFormFields(e.target);
+  if (matchArr === undefined) return;
+  onFocus = e.target;
+});
+document.addEventListener("focusout", function (e) {
+  var matchArr;
+  var flag = true;
+  offFocus = e.target;
+
+  if (offFocus != undefined || offFocus != null) {
+    matchArr = validateFormFields(offFocus);
+  }
+
   if (matchArr === undefined) return;
 
   if (!matchArr[0]) {
-    e.target.setCustomValidity(matchArr[1]);
+    var note = document.createElement('span');
+    note.classList.add('form__note');
+    note.innerHTML = matchArr[1];
+
+    if (!offFocus.parentNode.classList.contains('form__item')) {
+      for (var i = 0; i < offFocus.closest('.form__item').children.length; i++) {
+        if (offFocus.closest('.form__item').children[i].firstElementChild.classList.contains('form__note')) {
+          flag = false;
+        }
+      }
+    }
+
+    if (flag) {
+      offFocus.parentNode.insertBefore(note, offFocus);
+      offFocus.classList.add('error');
+    }
   } else {
-    e.target.setCustomValidity('');
+    if (offFocus.previousElementSibling && offFocus.previousElementSibling.classList.contains('form__note')) {
+      offFocus.previousElementSibling.remove();
+    }
+  }
+});
+document.addEventListener("input", function (e) {
+  var matchArr = validateFormFields(e.target);
+  if (matchArr === undefined) return;
+  onFocus = e.target;
+
+  if (onFocus.previousElementSibling && onFocus.previousElementSibling.classList.contains('form__note')) {
+    onFocus.previousElementSibling.remove();
+    onFocus.classList.remove('error');
+  }
+});
+document.addEventListener('click', function (e) {
+  if (e.target.id != 'delivery-01' && e.target.id != 'delivery-02') return;
+  var button = e.target,
+      addressBlock = button.closest('.form__block').nextElementSibling;
+
+  if (button.id === 'delivery-01') {
+    addressBlock.classList.add('visuallyhidden');
+    addressBlock.addEventListener('transitionend', function (e) {
+      if (e.target != addressBlock) return;
+      addressBlock.classList.add('hidden');
+    });
+
+    for (var i = 0; i < addressBlock.children.length; i++) {
+      if (addressBlock.children[i].classList.contains('form__item')) {
+        addressBlock.children[i].firstElementChild.removeAttribute('required');
+      }
+    }
+  } else {
+    addressBlock.classList.remove('hidden');
+    setTimeout(function () {
+      addressBlock.classList.remove('visuallyhidden');
+    }, 100);
+
+    for (var _i = 0; _i < addressBlock.children.length; _i++) {
+      if (addressBlock.children[_i].classList.contains('form__item')) {
+        addressBlock.children[_i].firstElementChild.setAttribute('required', 'required');
+      }
+    }
   }
 });
 },{}],"js/order.js":[function(require,module,exports) {
@@ -299,14 +390,14 @@ var _bodyScroll = require("./bodyScroll.js");
 
 var _validation = require("./validation.js");
 
-var popupOrder = document.querySelector('#popup-order'),
-    popupPreOrder = document.querySelector('#popup-preorder'),
-    popupOrderProductCard = document.querySelector('.popup-order__card'),
-    popupPreOrderProductCard = document.querySelector('.popup-preorder__card');
+var popupOrder = document.querySelector('.js-popup-order'),
+    popupPreOrder = document.querySelector('.js-popup-preorder'),
+    popupOrderProductCard = document.querySelector('.js-popup-order__card'),
+    popupPreOrderProductCard = document.querySelector('.js-popup-preorder__card');
 var productCard; // init popup-preorder
 
 exports.productCard = productCard;
-var productCards = document.querySelectorAll('.product-card');
+var productCards = document.querySelectorAll('.js-product-card');
 productCards = Array.from(productCards);
 productCards.forEach(function (element) {
   element.addEventListener('click', function (e) {
@@ -361,7 +452,7 @@ document.addEventListener('click', function (e) {
 });
 
 function setSize(element) {
-  var buttons = document.querySelectorAll('.product-card__sizing-button');
+  var buttons = document.querySelectorAll('.js-sizing-button');
   buttons.forEach(function (item) {
     item.classList.remove('active');
     item.previousElementSibling.removeAttribute('checked');
@@ -371,7 +462,7 @@ function setSize(element) {
 }
 
 function activateButtonPreOrder(parentNode) {
-  var sizingContainers = document.querySelectorAll('.product-card__sizing-container');
+  var sizingContainers = document.querySelectorAll('.js-sizing-container');
   sizingContainers = Array.from(sizingContainers);
   var currentSizingContainer;
   sizingContainers.forEach(function (element) {
@@ -392,50 +483,62 @@ function closePopupOrder() {
   popupOrderProductCard.innerHTML = '';
 }
 },{"./bodyScroll.js":"js/bodyScroll.js","./validation.js":"js/validation.js"}],"js/areas.js":[function(require,module,exports) {
-function getData(url) {
-  return new Promise(function (resolve, reject) {
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', url);
-    xhr.send();
+"use strict";
 
-    xhr.onload = function () {
-      resolve(xhr.response);
-    };
+var _request = require("./request.js");
 
-    xhr.onerror = function () {
-      reject([]);
-    };
-  });
-}
+var _config = _interopRequireDefault(require("./config.js"));
 
-var suggestionsWrapper = document.querySelector('#input-suggests-areas'),
-    inputAreas = document.querySelector('#areas');
-var subString, suggestions;
-inputAreas.addEventListener('input', function (e) {
-  var inputValue = e.target.value;
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var suggestionsWrappers = document.querySelectorAll('.js-input-suggests-areas'),
+    suggestionsWrapper,
+    subString,
+    suggestions,
+    inputAreas;
+document.addEventListener('input', function (e) {
+  if (e.target.getAttribute('name') != 'city') return;
+  inputAreas = e.target;
+  suggestionsWrapper = inputAreas.parentNode.nextElementSibling.firstElementChild;
+  var inputValue = inputAreas.value;
 
   if (inputValue.match(/[a-zA-Zа-яА-Я]/g)) {
     subString = inputValue;
   }
 
-  var url = 'https://api.hh.ru/suggests/area_leaves?text=';
-  var urlLength = url.length;
+  if (subString.length > 1) {
+    var url = _config.default.areasUrl.replace('{}', subString);
 
-  if ((url + subString).length >= urlLength + 2) {
-    url += subString;
-    getData(url).then(function (response) {
-      var cities = JSON.parse(response);
-      suggestions = cities['items'];
-      showSuggestions(suggestions);
+    (0, _request.getData)(url).then(function (response) {
+      try {
+        var cities = JSON.parse(response);
+
+        if (!cities['items']) {
+          throw new SyntaxError("response содержит ошибку, отсутствует ключ item");
+        }
+
+        suggestions = cities['items'];
+        showSuggestions(suggestions);
+      } catch (e) {
+        if (e.name == "SyntaxError") {
+          console.log(e.message);
+        } else {
+          throw e;
+        }
+      }
+    }).catch(function (error) {
+      return console.log(error);
     });
   } else {
     suggestionsWrapper.style.display = 'none';
   }
 });
-suggestionsWrapper.addEventListener('click', function (e) {
-  var city = e.target.innerHTML;
-  inputAreas.value = city;
-  suggestionsWrapper.style.display = 'none';
+Array.from(suggestionsWrappers).forEach(function (element) {
+  element.addEventListener('click', function (e) {
+    var city = e.target.innerHTML;
+    inputAreas.value = city;
+    element.style.display = 'none';
+  });
 });
 
 function showSuggestions(suggestions) {
@@ -448,14 +551,14 @@ function showSuggestions(suggestions) {
     suggestionsWrapper.appendChild(item);
   });
 }
-},{}],"js/formSubmit.js":[function(require,module,exports) {
+},{"./request.js":"js/request.js","./config.js":"js/config.js"}],"js/formSubmit.js":[function(require,module,exports) {
 "use strict";
 
 var _order = require("./order.js");
 
 var _validation = require("./validation.js");
 
-var orderForm = document.querySelector('.popup-order__form');
+var orderForm = document.querySelector('.js-order-form');
 orderForm.addEventListener('submit', function (e) {
   e.preventDefault();
   var phone = '';
@@ -466,15 +569,19 @@ orderForm.addEventListener('submit', function (e) {
       console.log(element.getAttribute('name'), ':', element.value);
     } else if (element.getAttribute('name') === 'phone-pre' || element.getAttribute('name') === 'phone-code' || element.getAttribute('name') === 'phone-number') {
       phone += element.value;
-    } else if (element.getAttribute('type') === 'text') {
+    } else if (element.getAttribute('type') === 'text' && element.value > 0) {
       console.log(element.getAttribute('name'), ':', element.value);
-    } else if (element.getAttribute('name') === 'address') {
+    } else if (element.getAttribute('name') === 'address' && element.value > 0) {
       console.log(element.getAttribute('name'), ':', element.value);
     }
   });
   console.log('phone :', phone);
   console.log('product :', _order.productCard.dataset.product);
-  console.log('chosen size :', _order.chosenSize.innerText);
+
+  if (_order.chosenSize) {
+    console.log('chosen size :', _order.chosenSize.innerText);
+  }
+
   console.log('orderForm submited');
   (0, _order.closePopupOrder)();
   (0, _validation.initFormFields)();
@@ -484,9 +591,13 @@ orderForm.addEventListener('submit', function (e) {
 
 require("./grid");
 
+require("./config");
+
 require("./slider");
 
 require("./bodyScroll");
+
+require("./request");
 
 require("./validation");
 
@@ -495,7 +606,7 @@ require("./order");
 require("./areas");
 
 require("./formSubmit");
-},{"./grid":"js/grid.js","./slider":"js/slider.js","./bodyScroll":"js/bodyScroll.js","./validation":"js/validation.js","./order":"js/order.js","./areas":"js/areas.js","./formSubmit":"js/formSubmit.js"}],"../../../AppData/Local/Yarn/Data/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
+},{"./grid":"js/grid.js","./config":"js/config.js","./slider":"js/slider.js","./bodyScroll":"js/bodyScroll.js","./request":"js/request.js","./validation":"js/validation.js","./order":"js/order.js","./areas":"js/areas.js","./formSubmit":"js/formSubmit.js"}],"../../../AppData/Local/Yarn/Data/global/node_modules/parcel-bundler/src/builtins/hmr-runtime.js":[function(require,module,exports) {
 var global = arguments[3];
 var OVERLAY_ID = '__parcel__error__overlay__';
 var OldModule = module.bundle.Module;
@@ -523,7 +634,7 @@ var parent = module.bundle.parent;
 if ((!parent || !parent.isParcelRequire) && typeof WebSocket !== 'undefined') {
   var hostname = "" || location.hostname;
   var protocol = location.protocol === 'https:' ? 'wss' : 'ws';
-  var ws = new WebSocket(protocol + '://' + hostname + ':' + "62091" + '/');
+  var ws = new WebSocket(protocol + '://' + hostname + ':' + "50078" + '/');
 
   ws.onmessage = function (event) {
     checkedAssets = {};

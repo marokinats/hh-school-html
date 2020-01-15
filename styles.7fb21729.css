@@ -65,6 +65,13 @@ ul {
   padding: 0;
   list-style: none;
 }
+.hidden {
+  display: none;
+}
+.visuallyhidden {
+  opacity: 0;
+  transition: opacity 0.1s;
+}
 .button {
   box-sizing: border-box;
   height: 38px;
@@ -328,7 +335,8 @@ ul {
 .input:focus {
   border-color: #0f8fee;
 }
-.input:invalid {
+.input:invalid,
+.input.error {
   border-color: #c52929;
 }
 .input.init {
@@ -341,7 +349,8 @@ ul {
 .input_phone-pre:focus {
   border-right-width: 1px;
 }
-.input_phone-pre:invalid {
+.input_phone-pre:invalid,
+.input_phone-pre.error {
   border-right-width: 1px;
 }
 .input_phone-code {
@@ -351,7 +360,8 @@ ul {
 .input_phone-code:focus {
   border-right-width: 1px;
 }
-.input_phone-code:invalid {
+.input_phone-code:invalid,
+.input_phone-code.error {
   border-right-width: 1px;
 }
 .input_phone-number {
@@ -802,8 +812,6 @@ ul {
     margin: 0 -15px;
   }
 }
-@media (min-width: 768px) {
-}
 .carousel-dots__list {
   display: flex;
 }
@@ -1028,20 +1036,30 @@ ul {
   width: 100%;
   overflow: hidden;
   position: relative;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #ffffff;
 }
 .popup-order {
-  background-color: #ffffff;
+  background-color: rgba(60, 60, 60, 0.5);
 }
-.popup-order .popup-content {
+.popup-order .popup__content {
   padding: 20px 0;
+  max-width: 1010px;
+  top: 0;
+  transform: translateX(-50%);
 }
 @media (min-width: 768px) {
-  .popup-order .popup-content {
+  .popup-order .popup__content {
     padding: 30px 0;
+    top: 50%;
+    transform: translate(-50%, -50%);
   }
 }
 @media (min-width: 1000px) {
-  .popup-order .popup-content {
+  .popup-order .popup__content {
     padding: 40px 0;
   }
 }
@@ -1107,7 +1125,6 @@ ul {
 .popup-preorder__card {
   text-align: center;
   max-width: 100%;
-  background: #ffffff;
   padding: 20px;
   box-shadow: 0px 25px 35px rgba(0, 0, 0, 0.1);
 }
@@ -1121,10 +1138,6 @@ ul {
   display: block;
 }
 .popup-preorder .popup__content {
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  transform: translate(-50%, -50%);
   max-width: 290px;
 }
 .form {
@@ -1139,15 +1152,36 @@ ul {
   display: flex;
   margin-bottom: 10px;
   box-sizing: border-box;
+  position: relative;
 }
 .form__label {
   display: flex;
   align-items: center;
   box-sizing: border-box;
 }
+.form__label-wrapper {
+  position: relative;
+  box-sizing: border-box;
+}
+.form__label-wrapper:last-child {
+  flex: 1;
+}
 .form__element {
   position: relative;
   box-sizing: border-box;
+}
+.form__note {
+  box-sizing: border-box;
+  position: absolute;
+  bottom: -22px;
+  z-index: 1;
+  background: pink;
+  display: block;
+  font-size: 10px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  left: 10px;
+  width: 270px;
 }
 
 
