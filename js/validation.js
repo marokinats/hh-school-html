@@ -9,31 +9,16 @@ export function initFormFields() {
   inputs.forEach(element => {
     element.classList.remove('init');
     element.classList.add('init');
+    
+    if (element.previousElementSibling != null && element.previousElementSibling.classList.contains('form__note')) {
+      element.parentNode.firstElementChild.remove();
+    }
   });
 
   textareas.forEach(element => {
     element.classList.remove('init');
     element.classList.add('init');
   });
-
-  // inputs.forEach(element => {
-  //   if (element.classList.contains('init')) {
-  //     element.classList.remove('init');
-  //   }
-  //   else {
-  //     element.classList.add('init');
-  //   }
-
-  // });
-
-  // textareas.forEach(element => {
-  //   if (element.classList.contains('init')) {
-  //     element.classList.remove('init');
-  //   }
-  //   else {
-  //     element.classList.add('init');
-  //   }
-  // });
 }
 
 initFormFields();
@@ -62,27 +47,113 @@ function validateFormFields(field) {
   }
   else if (field.getAttribute('name') === 'phone-pre') {
 
-    return [regexpCode.test(field.value), 'Введите код страны в формате +7'];
+    return [regexpCode.test(field.value), 'Введите код страны в формате +7, не более 5 цифр'];
   }
-  else if (field.getAttribute('name') === 'phone-code') {
+  else if (field.getAttribute('name') === 'phone-code' || field.getAttribute('name') === 'phone-number') {
 
-    return [regexpNumber.test(field.value), 'Код должен содержать только цифры'];
+    return [regexpNumber.test(field.value), 'Введите от 3 до 7 цифр'];
   }
-  else if (field.getAttribute('name') === 'phone-number') {
-
-    return [regexpNumber.test(field.value), 'Номер телефона должен содержать только цифры'];
-  }
-
 }
 
-document.addEventListener("input", function (e) {
+let onFocus,
+  offFocus;
+
+document.addEventListener("focusin", function (e) {
   let matchArr = validateFormFields(e.target);
+
+  if (matchArr === undefined) return;
+
+  onFocus = e.target;
+
+});
+
+document.addEventListener("focusout", function (e) {
+  let matchArr;
+  let flag = true;
+
+  offFocus = e.target;
+
+  if (offFocus != undefined || offFocus != null) {
+    matchArr = validateFormFields(offFocus);
+  }
+
   if (matchArr === undefined) return;
 
   if (!matchArr[0]) {
-    e.target.setCustomValidity(matchArr[1]);
+    let note = document.createElement('span');
+
+    note.classList.add('form__note');
+    note.innerHTML = matchArr[1];
+
+    if (!offFocus.parentNode.classList.contains('form__item')) {
+      for (let i = 0; i < offFocus.closest('.form__item').children.length; i++) {
+        if (offFocus.closest('.form__item').children[i].firstElementChild.classList.contains('form__note')) {
+          flag = false;
+        }
+      }
+    }
+
+    if (flag) {
+      offFocus.parentNode.insertBefore(note, offFocus);
+      offFocus.classList.add('error');
+    }
   }
   else {
-    e.target.setCustomValidity('');
+    if (offFocus.previousElementSibling && offFocus.previousElementSibling.classList.contains('form__note')) {
+      offFocus.previousElementSibling.remove();
+    }
   }
 });
+
+document.addEventListener("input", function (e) {
+  let matchArr = validateFormFields(e.target);
+
+  if (matchArr === undefined) return;
+
+  onFocus = e.target;
+
+  if (onFocus.previousElementSibling && onFocus.previousElementSibling.classList.contains('form__note')) {
+    onFocus.previousElementSibling.remove();
+    onFocus.classList.remove('error');
+  }
+});
+
+
+document.addEventListener('click', function (e) {
+
+  if (e.target.id != 'delivery-01' && e.target.id != 'delivery-02') return;
+
+  let button = e.target,
+    addressBlock = button.closest('.form__block').nextElementSibling;
+
+  if (button.id === 'delivery-01') {
+    addressBlock.classList.add('visuallyhidden');
+
+    addressBlock.addEventListener('transitionend', function (e) {
+
+      if (e.target != addressBlock) return;
+
+      addressBlock.classList.add('hidden');
+    });
+    for (let i = 0; i < addressBlock.children.length; i++) {
+
+      if (addressBlock.children[i].classList.contains('form__item')) {
+        addressBlock.children[i].firstElementChild.removeAttribute('required');
+      }
+    }
+  }
+  else {
+    addressBlock.classList.remove('hidden');
+
+    setTimeout(() => {
+      addressBlock.classList.remove('visuallyhidden');
+    }, 100);
+
+    for (let i = 0; i < addressBlock.children.length; i++) {
+
+      if (addressBlock.children[i].classList.contains('form__item')) {
+        addressBlock.children[i].firstElementChild.setAttribute('required', 'required');
+      }
+    }
+  }
+})

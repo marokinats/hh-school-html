@@ -1,15 +1,15 @@
 import { hideBodyScroll, showBodyScroll } from './bodyScroll.js';
 import { initFormFields } from './validation.js';
 
-const popupOrder = document.querySelector('#popup-order'),
-  popupPreOrder = document.querySelector('#popup-preorder'),
-  popupOrderProductCard = document.querySelector('.popup-order__card'),
-  popupPreOrderProductCard = document.querySelector('.popup-preorder__card');
+const popupOrder = document.querySelector('.js-popup-order'),
+  popupPreOrder = document.querySelector('.js-popup-preorder'),
+  popupOrderProductCard = document.querySelector('.js-popup-order__card'),
+  popupPreOrderProductCard = document.querySelector('.js-popup-preorder__card');
 
 export let productCard;
 
 // init popup-preorder
-let productCards = document.querySelectorAll('.product-card');
+let productCards = document.querySelectorAll('.js-product-card');
 productCards = Array.from(productCards);
 
 productCards.forEach(element => {
@@ -86,7 +86,7 @@ document.addEventListener('click', (e) => {
 })
 
 function setSize(element) {
-  const buttons = document.querySelectorAll('.product-card__sizing-button');
+  const buttons = document.querySelectorAll('.js-sizing-button');
 
   buttons.forEach(item => {
     item.classList.remove('active');
@@ -99,7 +99,7 @@ function setSize(element) {
 
 function activateButtonPreOrder(parentNode) {
 
-  let sizingContainers = document.querySelectorAll('.product-card__sizing-container');
+  let sizingContainers = document.querySelectorAll('.js-sizing-container');
   sizingContainers = Array.from(sizingContainers);
 
   let currentSizingContainer;

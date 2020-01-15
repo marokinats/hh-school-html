@@ -1,63 +1,66 @@
-function getData(url) {
+import { getData } from './request.js';
+import config from './config.js';
 
-  return new Promise(function (resolve, reject) {
-    let xhr = new XMLHttpRequest();
+let suggestionsWrappers = document.querySelectorAll('.js-input-suggests-areas'),
+  suggestionsWrapper,
+  subString,
+  suggestions,
+  inputAreas;
 
-    xhr.open('GET', url);
+document.addEventListener('input', (e) => {
 
-    xhr.send();
+  if (e.target.getAttribute('name') != 'city') return;
 
-    xhr.onload = () => {
-      resolve(xhr.response);
-    };
+  inputAreas = e.target;
+  suggestionsWrapper = inputAreas.parentNode.nextElementSibling.firstElementChild;
 
-    xhr.onerror = () => {
-      reject([]);
-    };
-  })
-}
-
-const suggestionsWrapper = document.querySelector('#input-suggests-areas'),
-  inputAreas = document.querySelector('#areas');
-
-let subString,
-  suggestions;
-
-inputAreas.addEventListener('input', (e) => {
-
-  let inputValue = e.target.value;
+  let inputValue = inputAreas.value;
 
   if (inputValue.match(/[a-zA-Zа-яА-Я]/g)) {
     subString = inputValue;
   }
 
-  let url = 'https://api.hh.ru/suggests/area_leaves?text=';
-  let urlLength = url.length;
-
-  if ((url + subString).length >= (urlLength + 2)) {
-    url += subString;
-
+  if (subString.length > 1) {
+    let url = config.areasUrl.replace('{}', subString);
     getData(url).then((response) => {
+      try {
+        let cities = JSON.parse(response);
 
-      let cities = JSON.parse(response);
-  
-      suggestions = cities['items'];
-  
-      showSuggestions(suggestions);
-  
-    })
+        if (!cities['items']) {
+          throw new SyntaxError("response содержит ошибку, отсутствует ключ item");
+        }
+
+        suggestions = cities['items'];
+
+        showSuggestions(suggestions);
+      }
+      catch (e) {
+        if (e.name == "SyntaxError") {
+          console.log(e.message);
+        } else {
+          throw e;
+        }
+        
+      }
+
+    }).catch(error => console.log(error));
   }
   else {
     suggestionsWrapper.style.display = 'none';
   }
 })
 
-suggestionsWrapper.addEventListener('click', (e) => {
-  let city = e.target.innerHTML;
+Array.from(suggestionsWrappers).forEach(element => {
 
-  inputAreas.value = city;
-  suggestionsWrapper.style.display = 'none';
-})
+  element.addEventListener('click', (e) => {
+
+    let city = e.target.innerHTML;
+
+    inputAreas.value = city;
+    element.style.display = 'none';
+  })
+});
+
 
 function showSuggestions(suggestions) {
   suggestionsWrapper.innerHTML = '';

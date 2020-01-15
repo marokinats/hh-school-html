@@ -1,7 +1,7 @@
 import {closePopupOrder, chosenSize, productCard} from './order.js';
 import {initFormFields} from './validation.js';
 
-const orderForm = document.querySelector('.popup-order__form');
+const orderForm = document.querySelector('.js-order-form');
 
 orderForm.addEventListener('submit', (e) => {
   e.preventDefault();
@@ -18,17 +18,19 @@ orderForm.addEventListener('submit', (e) => {
     else if(element.getAttribute('name') === 'phone-pre' || element.getAttribute('name') === 'phone-code' || element.getAttribute('name') === 'phone-number') {
       phone += element.value;
     }
-    else if(element.getAttribute('type') === 'text') {
+    else if(element.getAttribute('type') === 'text' && element.value > 0) {
       console.log(element.getAttribute('name'),':', element.value);
     }
-    else if(element.getAttribute('name') === 'address') {
+    else if(element.getAttribute('name') === 'address' && element.value > 0) {
       console.log(element.getAttribute('name'),':', element.value);
     }
     
   })
   console.log('phone :', phone);
   console.log('product :', productCard.dataset.product);
-  console.log('chosen size :', chosenSize.innerText);
+  if (chosenSize) {
+    console.log('chosen size :', chosenSize.innerText);
+  }
   console.log('orderForm submited');
 
   closePopupOrder();

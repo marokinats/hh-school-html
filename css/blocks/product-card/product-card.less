@@ -5,10 +5,6 @@
   cursor: pointer;
   max-width: 100%;
   background: #ffffff;
-  // top: 0;
-  // left: auto;
-  // right: auto;
-  // box-shadow: none;
   padding: 0 0 20px;
 
   &__image-container {
@@ -69,11 +65,6 @@
 
     &-button {
       border-right-width: 0;
-
-      // &.active {
-      //   background-color: #eeeeee;
-      //   color: #333333;
-      // }
     }
 
     &-box:last-child & {
@@ -92,6 +83,7 @@
     &.disabled {
       opacity: 0.5;
       cursor: not-allowed;
+
       &:hover {
         background: @color-primary;
       }
