@@ -1,0 +1,127 @@
+@import "../../common/columns/columns.less";
+
+@keyframes slide {
+  from {
+    transform: translate(0, 0);
+  }
+
+  to {
+    transform: translate(-100%, 0);
+  }
+}
+
+.carousel-section {
+  background-color: #f9f9f9;
+  position: relative;
+  padding-bottom: 20px;
+
+  &__cards-wrapper {
+    .columns-row();
+    flex-wrap: nowrap;
+    overflow: hidden;
+    width: 100%;
+    margin: 0;
+    @media @screen-gt-s {
+      margin: 0;
+    }
+  }
+}
+
+.carousel-card {
+  flex: 0 0 auto;
+  display: none;
+  align-items: center;
+  flex-wrap: wrap;
+  text-align: center;
+  min-height: 380px;
+  max-width: 300px;
+  margin: 0 auto;
+  position: relative;
+
+  @media @screen-gt-s {
+    flex-wrap: nowrap;
+    text-align: left;
+    min-height: 300px;
+    max-width: 100%;
+    margin: 0;
+  }
+
+  @media @screen-gt-m {
+    min-height: 430px;
+  }
+
+  &_active {
+    display: flex;
+  }
+
+  &_hide {
+    display: flex;
+    animation: slide 0.5s ease-in;
+    animation-fill-mode: forwards;
+  }
+
+  &_show {
+    display: flex;
+    animation: slide 0.5s ease-in;
+    animation-fill-mode: forwards;
+  }
+
+  &__description {
+    width: 100%;
+    order: 2;
+
+    @media @screen-gt-s {
+      width: 50%;
+      order: 1;
+    }
+
+    &-title {
+      margin-bottom: 10px;
+
+      @media @screen-gt-s {
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+  &__image {
+    display: block;
+
+    &-container {
+      width: 100%;
+      order: 1;
+
+      @media @screen-gt-s {
+        width: 50%;
+        order: 2;
+      }
+    }
+  }
+}
+
+.carousel-dots {
+  .columns-row();
+  justify-content: center;
+
+  &__list {
+    display: flex;
+  }
+
+  &__item {
+    width: 8px;
+    height: 8px;
+    background: #dfdedd;
+    border-radius: 50%;
+    margin-right: 5px;
+    transition: background-color 0.2s ease;
+    cursor: pointer;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &_active {
+      background: #212122;
+    }
+  }
+}
