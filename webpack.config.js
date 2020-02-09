@@ -1,3 +1,4 @@
+const path = require('path');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
@@ -11,7 +12,8 @@ module.exports = {
     scripts: './js/index.js'
   },
   output: {
-    publicPath: '/dist'
+    publicPath: '/dist',
+    path: path.join(__dirname, '/dist')
   },
   module: {
     rules: [
@@ -91,10 +93,10 @@ module.exports = {
   },
   plugins: [
     !isDevelopment ? new CleanWebpackPlugin() : () => { },
+    new HtmlWebpackPlugin({ template: './index.html' }),
     new MiniCssExtractPlugin({
       filename: 'styles.css',
     }),
-    new HtmlWebpackPlugin({ template: './index.html' })
   ],
   optimization: {
     minimizer: [
@@ -108,4 +110,7 @@ module.exports = {
       })
     ],
   },
+  devServer: {
+    contentBase: path.join(__dirname, '/dist'),
+  }
 }
