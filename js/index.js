@@ -7,3 +7,4 @@ import './validation';
 import './order';
 import './areas';
 import './formSubmit';
+import '../css/styles.less';
