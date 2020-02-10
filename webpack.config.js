@@ -1,19 +1,15 @@
-const path = require('path');
 const TerserJSPlugin = require('terser-webpack-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
-const isDevelopment = !process.env.NODE_ENV || process.env.NODE_ENV != 'production';
+
+const isDevelopment = process.env.NODE_ENV && process.env.NODE_ENV === 'development';
 
 module.exports = {
   entry: {
     scripts: './js/index.js'
-  },
-  output: {
-    publicPath: '/dist',
-    path: path.join(__dirname, '/dist')
   },
   module: {
     rules: [
@@ -26,7 +22,18 @@ module.exports = {
         exclude: /(node_modules)/,
         use: [{
           loader: 'babel-loader',
-          options: { presets: ['@babel/preset-env'] }
+          options: {
+            presets: [
+              ['@babel/preset-env',
+                {
+                  'targets': {
+                    'chrome': '58',
+                    'ie': '11'
+                  }
+                }
+              ]
+            ]
+          }
         }]
       },
       {
@@ -35,7 +42,8 @@ module.exports = {
           {
             loader: 'file-loader',
             options: {
-              name: '/[path][name].[ext]',
+              esModule: false,
+              name: '[path][name].[ext]',
             }
           },
           {
@@ -54,63 +62,53 @@ module.exports = {
         ]
       },
       {
-        test: /\.svg$/,
-        use: {
-          loader: 'svg-url-loader',
-          options: {}
-        }
-      },
-      {
         test: /\.less$/,
         use: [
           'style-loader',
           MiniCssExtractPlugin.loader,
-          {
-            loader: 'css-loader',
-            options: {
-              sourceMap: true,
-            },
-          },
+          'css-loader',
           {
             loader: 'postcss-loader',
             options: {
-              sourceMap: true,
               plugins: [
-                !isDevelopment ? require('cssnano') : () => { },
-                require('autoprefixer')
+                require('autoprefixer')({
+                  'overrideBrowserslist':
+                    [
+                      "last 2 chrome version",
+                      "last 2 firefox version",
+                      "last 2 safari version",
+                      "last 2 ie version"
+                    ]
+                })
               ]
             }
           },
-          {
-            loader: 'less-loader',
-            options: {
-              sourceMap: true,
-            },
-          }
+          'less-loader'
         ]
       },
     ]
   },
   plugins: [
-    !isDevelopment ? new CleanWebpackPlugin() : () => { },
-    new HtmlWebpackPlugin({ template: './index.html' }),
+    new CleanWebpackPlugin(),
+    new HtmlWebpackPlugin({
+      template: './index.html',
+      inject: false,
+      minify: isDevelopment ? false : { collapseWhitespace: true },
+    }),
     new MiniCssExtractPlugin({
       filename: 'styles.css',
     }),
   ],
+  devtool: isDevelopment ? 'source-map' : 'hidden-source-map',
   optimization: {
     minimizer: [
       new TerserJSPlugin({}),
       new OptimizeCSSAssetsPlugin({
-        cssProcessorOptions: {
-          map: {
-            inline: false
-          }
-        }
+        cssProcessor: require('cssnano'),
+        cssProcessorPluginOptions: {
+          preset: ['default', { discardComments: { removeAll: true } }],
+        },
       })
     ],
   },
-  devServer: {
-    contentBase: path.join(__dirname, '/dist'),
-  }
 }
