@@ -3,6 +3,7 @@ const gulpLoadPlugins = require('gulp-load-plugins');
 const plugins = gulpLoadPlugins();
 const webpackStream = require('webpack-stream');
 const gulpUtil = require('gulp-util');
+const gulpCleanCSS = require('gulp-clean-css');
 const del = require('del');
 const browserSync = require('browser-sync');
 
@@ -53,7 +54,8 @@ gulp.task('styles', function () {
     .pipe(plugins.if(isDevelopment, plugins.sourcemaps.init()))
     .pipe(plugins.less())
     .pipe(plugins.autoprefixer())
-    .pipe(plugins.sourcemaps.write())
+    .pipe(plugins.if(!isDevelopment, gulpCleanCSS()))
+    .pipe(plugins.if(isDevelopment, plugins.sourcemaps.write()))
     .pipe(gulp.dest('./dist/'))
     .pipe(browserSync.stream())
 });
@@ -66,7 +68,7 @@ gulp.task('images', function () {
 });
 
 gulp.task('blocks images', function () {
-  return gulp.src(['./css/**/*.*', '!./css/**/*.less'])
+  return gulp.src('./css/**/*.{jpg,png,svg}')
     .pipe(plugins.if(!isDevelopment, plugins.imagemin()))
     .pipe(gulp.dest('./dist/css/'))
     .pipe(browserSync.stream())
